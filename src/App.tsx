@@ -1,24 +1,38 @@
-import { useState } from 'react';
 import Modal from './modal/Modal';
-import type { ModalProps } from './modal/Modal.types';
-import './App.css'
+import useModal from './modal/useModal';
+import type { AlertModalProps, ConfirmModalProps } from './modal/Modal.types';
 
 function App() {
-  const [modal, setModal] = useState<ModalProps | null>(null);
+  const { modal, alert, confirm } = useModal();
 
-  function handleModal() {
-    setModal({
-      type: "alert",
-      message: "Hello, World!",
-      okWord: "OK",
-      variant: "default",
-      onConfirm: () => {setModal(null)},
-    });
+  const alertProps: AlertModalProps = {
+    message: "Hello, World!",
+    okWord: "OK",
+    variant: "default",
+    onConfirm: () => {
+      console.log("Alert confirmed!");
+    },
+  }
+
+  const confirmProps: ConfirmModalProps = {
+    message: "Hello, confirm!",
+    okWord: "OK",
+    cancelWord: "Cancel",
+    variant: "default",
+    onConfirm: () => {
+      console.log("Confirm confirmed!");
+    },
+    onCancel: () => {
+      console.log("Confirm cancelled!");
+    }
   }
 
   return (
     <div className="App" style={{height: "200vh", background:"#eee"}}>
-      <button onClick={handleModal}>Show Modal</button>
+      <button onClick={() => alert(alertProps)}>Show alert Modal</button>
+      <hr />
+      <button onClick={() => confirm(confirmProps)}>Show confirm Modal</button>
+
       {modal && <Modal {...modal} />}
     </div>
   )
