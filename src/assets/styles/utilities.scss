@@ -1,0 +1,34 @@
+:root {
+    --font-xsm: 0.75rem;
+    --font-sm: 0.875rem;
+    --font-md: 1rem;
+    --font-lg: 1.25rem;
+
+    --space-half: 0.5rem;
+    --space-xsm: 0.75rem;
+    --space-sm: 0.875rem;
+    --space-md: 1rem;
+    --space-lg: 1.25rem;
+
+    --black-800: #444;
+    --black-600: #777;
+    --black-400: #aaa;
+    --black-200: #d1d1d1;
+
+    --white: #fff;
+
+    --radius-sm: 4px;
+    --radius-md: 6px;
+    --radius-lg: 8px;
+}
+
+#cardSimulator {
+    --color-header-bg: #0d833d;
+    --color-plus-button : #308c2d;
+    --color-border: #7db273;
+    --color-bg-first: #c4d8b5;
+    --color-bg-second: #f9faf9;
+
+    --left-width: 25%;
+    --right-width: 75%;
+}

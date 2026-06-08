@@ -1,41 +1,48 @@
-import Modal from './modal/Modal';
-import useModal from './modal/useModal';
-import type { AlertModalProps, ConfirmModalProps } from './modal/Modal.types';
+import Modal from "./modal/Modal";
+import CardSimulator from "./cardSimulator/CardSimulator";
+import useModal from "./modal/useModal";
+import type { AlertModalProps, ConfirmModalProps } from "./modal/Modal.types";
 
 function App() {
-  const { modal, alert, confirm } = useModal();
+    const { modal, alert, confirm } = useModal();
 
-  const alertProps: AlertModalProps = {
-    message: "Hello, World!",
-    okWord: "OK",
-    variant: "default",
-    onConfirm: () => {
-      console.log("Alert confirmed!");
-    },
-  }
+    const alertProps: AlertModalProps = {
+        message: "Hello, World!",
+        okWord: "OK",
+        variant: "default",
+        onConfirm: () => {
+            console.log("Alert confirmed!");
+        },
+    };
 
-  const confirmProps: ConfirmModalProps = {
-    message: "Hello, confirm!",
-    okWord: "OK",
-    cancelWord: "Cancel",
-    variant: "default",
-    onConfirm: () => {
-      console.log("Confirm confirmed!");
-    },
-    onCancel: () => {
-      console.log("Confirm cancelled!");
-    }
-  }
+    const confirmProps: ConfirmModalProps = {
+        message: "Hello, confirm!",
+        okWord: "OK",
+        cancelWord: "Cancel",
+        variant: "default",
+        onConfirm: () => {
+            console.log("Confirm confirmed!");
+        },
+        onCancel: () => {
+            console.log("Confirm cancelled!");
+        },
+    };
 
-  return (
-    <div className="App" style={{height: "200vh", background:"#eee"}}>
-      <button onClick={() => alert(alertProps)}>Show alert Modal</button>
-      <hr />
-      <button onClick={() => confirm(confirmProps)}>Show confirm Modal</button>
+    return (
+        <div className="App">
+            <CardSimulator />
 
-      {modal && <Modal {...modal} />}
-    </div>
-  )
+
+            <br /><br /><br /><br />
+            <hr />
+            <button onClick={() => alert(alertProps)}>Show alert Modal</button>
+            <button onClick={() => confirm(confirmProps)}>
+                Show confirm Modal
+            </button>
+
+            {modal && <Modal {...modal} />}
+        </div>
+    );
 }
 
-export default App
+export default App;
