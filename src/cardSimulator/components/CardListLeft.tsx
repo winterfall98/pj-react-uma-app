@@ -1,12 +1,11 @@
 
 import styles from "./../assets/styles/cardSimulator.module.scss";
-/** 
- * TODO: 
- * 
- * 셀렉트 (열 갯수 제어)
- */
+interface CardListLeftProps {
+    col: number;
+    onClickEvent: (n:number) => void;
+}
 
-function CardListLeft() {
+function CardListLeft({ col, onClickEvent }: CardListLeftProps) {
     return (
         <div className={styles.leftBoxWrap}>
             <div className={styles.leftBox}>
@@ -22,11 +21,12 @@ function CardListLeft() {
             <div className={styles.selectBox}>
                 <h4>카드 갯수 선택</h4>
                 <div className={styles.selectBottomBox}>
-                    <select id="col">
-                        <option value="4" selected>4칸</option>
+                    <select id="col" value={col} onChange={(e) => onClickEvent(Number(e.target.value))}>
+                        <option value="4">4칸</option>
                         <option value="5">5칸</option>
                         <option value="6">6칸</option>
                         <option value="7">7칸</option>
+                        <option value="8">8칸</option>
                     </select>
                 </div>
             </div>
