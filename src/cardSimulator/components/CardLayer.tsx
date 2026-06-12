@@ -1,11 +1,16 @@
 import styles from "../assets/styles/cardSimulator.module.scss";
 
-function Search() {
-    // 검색 컴포넌트
-    return <input type="text"></input>;
+function Search() {  // 검색
+    return (
+        <input
+            className={styles.searchInput}
+            type="text"
+            placeholder="카드 이름을 입력하세요"
+        />
+    );
 }
 
-function TypeList() {
+function TypeList() {  // 타입 버튼
     // 타입 컴포넌트
     return (
         <ul>
@@ -16,8 +21,7 @@ function TypeList() {
     );
 }
 
-function CharaList() {
-    // 캐릭터 리스트
+function CharaList() {  // 캐릭터 리스트
     return (
         <ul>
             <li>
@@ -38,16 +42,18 @@ function CardLayer({ isOpen, closeLayer }: CardLayerProps) {
      * 캐릭터리스트
      */
     return (
-        <div className="layer">
+        <div className={styles.layer}>
             <div className={styles.header}>
                 <h4>서포트 카드 리스트</h4>
-                <button>
+                <button onClick={closeLayer}>
                     <span className="sr-only">닫기</span>
                 </button>
             </div>
-            <Search />
-            <TypeList />
-            <CharaList />
+            <div className={styles.contents}>
+                <Search />
+                <TypeList />
+                <CharaList />
+            </div>
         </div>
     );
 }
