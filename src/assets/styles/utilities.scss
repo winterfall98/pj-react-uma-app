@@ -21,14 +21,22 @@
     --radius-md: 6px;
     --radius-lg: 8px;
     --radius-xlg: 16px;
+
+    --letter-spacing-lg: -0.4px;
+    --letter-spacing-md: -0.6px;
+    --letter-spacing-sm: -0.8px;
+
+
 }
 
 #cardSimulator {
     --color-header-bg: #0d833d;
+    --color-type-fill: #1c9b60;
     --color-plus-button: #308c2d;
     --color-border: #7db273;
     --color-bg-first: #c4d8b5;
     --color-bg-second: #f9faf9;
+    --color-bg-third: #eafcf4;
 
     --left-width: 25%;
     --right-width: 75%;

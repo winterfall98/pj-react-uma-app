@@ -167,7 +167,6 @@
         top: 10%;
         left: 10%;
         background: var(--white);
-        // border: 1px solid var(--color-border);
 
         .header {
             position: relative;
@@ -225,6 +224,35 @@
             &::placeholder {
                 color: var(--black-600);
                 letter-spacing: var(--letter-spacing-lg);
+            }
+        }
+
+
+        .typeList {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: var(--space-half);
+
+            li {
+                button {
+                    padding: var(--space-half);
+                    background-color: var(--white);
+                    border-radius: var(--radius-md);
+                    border:1px solid var(--black-400);
+                    
+                    svg {
+                        color: var(--black-600);
+                    }
+                    
+                    &.on {
+                        border: 1px solid var(--color-type-fill);
+                        background-color: var(--color-bg-third);
+                        svg {
+                            color: var(--color-type-fill);
+                        }
+                    }
+                }
             }
         }
     }
