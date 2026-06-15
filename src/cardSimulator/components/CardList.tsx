@@ -1,12 +1,46 @@
 import { useState } from "react";
 import styles from "./../assets/styles/cardSimulator.module.scss";
-import type { CardCode } from "./../CardSimulator.type";
+import type { CardCode, CardData, CardListMap } from "./../CardSimulator.type";
 import CardLayer from "./CardLayer";
 
-const images = import.meta.glob("./../assets/charaCard/*.png", {
-    eager: true,
+// 이미지 처리
+const imageModules = import.meta.glob("../assets/charaCard/*.png", {
     as: "url",
 });
+
+let cachedCardList: CardListMap = {};
+
+async function loadImages() {
+    const entries = Object.entries(imageModules);
+    const results = await Promise.all(
+        entries.map(async ([Path2D, loader]) => {
+            const url = await loader();
+            const code = Path2D.match(/(\d+)/)?.[0];
+            return [code, url];
+        }),
+    );
+    const imageMap = Object.fromEntries(results);
+
+    return imageMap;
+}
+
+
+async function setCharaDatas() {
+    if (Object.keys(cachedCardList).length > 0) return;
+
+    const [images, cardList] = await Promise.all([
+        loadImages(),
+        fetch("/cardSimulator/cardListData.json")
+        .then((res) => res.json() as Promise<CardListMap>),
+    ]);
+
+    for (const [code, info] of Object.entries(cardList) as [string, CardData][]) {
+        info.image = images[code] ?? null;
+    }
+
+    cachedCardList = cardList;
+    console.log('cards => ', cachedCardList);
+}
 
 type CardProps = {
     key: number;
@@ -14,22 +48,16 @@ type CardProps = {
     openLayer: () => void;
 };
 
-let CachedCharaData = null;
-
 function Card({ code, openLayer }: CardProps) {
     const linkUrl: string = "https://uma.inven.co.kr/";
     return (
         <>
             <div className={styles.card}>
-                <button className={styles.cardSlot} onClick={openLayer}>
+                <button className={styles.cardSlot} onClick={(e) => {e.stopPropagation(); openLayer(); }}>
                     {code !== false ? (
                         <img
-                            src={
-                                images[
-                                    `./../assets/charaCard/scardicon_${code}.png`
-                                ]
-                            }
-                            // title={}
+                            src={cachedCardList[code]['image']}
+                            title={cachedCardList[code]['name']}
                         />
                     ) : (
                         <span
@@ -55,6 +83,7 @@ function Card({ code, openLayer }: CardProps) {
     );
 }
 
+
 type cardListProps = {
     cards: CardCode[];
 };
@@ -65,7 +94,8 @@ function CardList({ cards }: cardListProps) {
     const [layerIsOpen, setLayerIsOpen] = useState<boolean>(false);
     const [selectedSlot, setSelectedSlot] = useState<number | null>(null);
 
-    function openLayer(index: number) {
+    async function openLayer(index: number) {
+        await setCharaDatas();
         setSelectedSlot(index);
         setLayerIsOpen(true);
     }
@@ -73,6 +103,8 @@ function CardList({ cards }: cardListProps) {
         setSelectedSlot(null);
         setLayerIsOpen(false);
     }
+    
+    // if (layerIsOpen) openLayer(0);
 
     return (
         <>
@@ -91,6 +123,7 @@ function CardList({ cards }: cardListProps) {
                     key={selectedSlot}
                     isOpen={layerIsOpen}
                     closeLayer={closeLayer}
+                    cardList={cachedCardList}
                 />
             ) : (
                 <></>
