@@ -46,13 +46,14 @@ type CardProps = {
     key: number;
     code: CardCode;
     openLayer: () => void;
+    removeThisCardEvent: () => void;
 };
 
-function Card({ code, openLayer }: CardProps) {
+function Card({ code, openLayer, removeThisCardEvent }: CardProps) {
     const linkUrl: string = "https://uma.inven.co.kr/";
     return (
         <>
-            <div className={styles.card}>
+            <div className={`${styles.card} ${code !== false && styles.on}`}>
                 <button className={styles.cardSlot} onClick={(e) => {e.stopPropagation(); openLayer(); }}>
                     {code !== false ? (
                         <img
@@ -78,6 +79,12 @@ function Card({ code, openLayer }: CardProps) {
                 >
                     상세보기
                 </a>
+                <button
+                    className={styles.removeButton}
+                    onClick={removeThisCardEvent}
+                >
+                    <span className="sr-only">카드 제거하기</span>
+                </button>
             </div>
         </>
     );
@@ -86,11 +93,12 @@ function Card({ code, openLayer }: CardProps) {
 
 type cardListProps = {
     cards: CardCode[];
+    setCardsEvent: (index: number, code: CardCode) => void;
 };
 
 // 카드 리스트 (n개)
 // TODO: 슬롯 개수 셀렉트 받아서, 해당 값대로 Card 컴포넌트 렌더링하도록 변경 예정
-function CardList({ cards }: cardListProps) {
+function CardList({ cards, setCardsEvent }: cardListProps) {
     const [layerIsOpen, setLayerIsOpen] = useState<boolean>(false);
     const [selectedSlot, setSelectedSlot] = useState<number | null>(null);
 
@@ -98,12 +106,19 @@ function CardList({ cards }: cardListProps) {
         await setCharaDatas();
         setSelectedSlot(index);
         setLayerIsOpen(true);
+        console.log(selectedSlot, index);
     }
     function closeLayer() {
         setSelectedSlot(null);
         setLayerIsOpen(false);
     }
-    
+
+    function removeThisCardEvent(index: number, code: CardCode) {
+        console.log(index);
+        setCardsEvent(index, code);
+        setSelectedSlot(null);
+    }
+
     // if (layerIsOpen) openLayer(0);
 
     return (
@@ -115,6 +130,7 @@ function CardList({ cards }: cardListProps) {
                         key={index}
                         code={card}
                         openLayer={() => openLayer(index)}
+                        removeThisCardEvent={() => removeThisCardEvent(index, false)}
                     />
                 ))}
             </div>
@@ -122,8 +138,10 @@ function CardList({ cards }: cardListProps) {
                 <CardLayer
                     key={selectedSlot}
                     isOpen={layerIsOpen}
-                    closeLayer={closeLayer}
                     cardList={cachedCardList}
+                    closeLayerEvent={closeLayer}
+                    setCardsEvent={(code: number) => setCardsEvent(Number(selectedSlot), code)}
+
                 />
             ) : (
                 <></>

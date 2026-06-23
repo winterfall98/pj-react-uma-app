@@ -58,17 +58,24 @@ function TypeList({ selectedType, setSelectedType }: typeListProps) {
 
 type CharaListProps = {
     cardList: CardListMap;
+    setCardsEvent: (code: number) => void;
+    closeLayerEvent: () => void;
 };
 
 // 캐릭터 리스트
-function CharaList({ cardList }: CharaListProps) {
+function CharaList({ cardList, closeLayerEvent, setCardsEvent }: CharaListProps) {
     const isEmpty = Object.entries(cardList).length <= 0;
+
+    function cardClickEvent(code: number) {
+        setCardsEvent(code);
+        closeLayerEvent();
+    }
     return (
         <ul className={styles.charaList}>
         {!isEmpty &&
             Object.entries(cardList).map(([code, card]) => (
                 <li key={code}>
-                    <button>
+                    <button onClick={() => cardClickEvent(Number(code))}>
                         <img src={card.image} alt={card.name} />
                         <span className="sr-only">{card.name}</span>
                     </button>
@@ -80,11 +87,12 @@ function CharaList({ cardList }: CharaListProps) {
 
 type CardLayerProps = {
     isOpen: boolean;
-    closeLayer: () => void;
     cardList: CardListMap;
+    closeLayerEvent: () => void;
+    setCardsEvent: (code: number) => void;
 };
 
-function CardLayer({ isOpen, closeLayer, cardList }: CardLayerProps) {
+function CardLayer({ isOpen, cardList, closeLayerEvent, setCardsEvent }: CardLayerProps) {
     const [selectedType, setSelectedType] = useState<number>(0);
     const layerRef = useRef<HTMLDivElement>(null);
 
@@ -92,19 +100,19 @@ function CardLayer({ isOpen, closeLayer, cardList }: CardLayerProps) {
         function handleClickOutside(e: MouseEvent) {
             if (!layerRef.current) return;
             if(layerRef.current && e.target instanceof Node && !layerRef.current.contains(e.target)) {
-                closeLayer();
+                closeLayerEvent();
             }
         }
 
         document.addEventListener("mousedown", handleClickOutside);
         return () => document.removeEventListener("mousedown", handleClickOutside);
-    }, [closeLayer]);
+    }, [closeLayerEvent]);
 
     return (
         <div className={styles.layer} ref={layerRef}>
             <div className={styles.header}>
                 <h4>서포트 카드 리스트</h4>
-                <button onClick={closeLayer}>
+                <button onClick={closeLayerEvent}>
                     <span className="sr-only">닫기</span>
                 </button>
             </div>
@@ -114,7 +122,11 @@ function CardLayer({ isOpen, closeLayer, cardList }: CardLayerProps) {
                     selectedType={selectedType}
                     setSelectedType={setSelectedType}
                 />
-                <CharaList cardList={cardList} />
+                <CharaList
+                cardList={cardList}
+                setCardsEvent={setCardsEvent}
+                closeLayerEvent={closeLayerEvent}
+                />
             </div>
         </div>
     );

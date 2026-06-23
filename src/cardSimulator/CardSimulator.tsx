@@ -48,12 +48,18 @@ function CardSimulator() {
         setCardDetails([...cardDetails].slice(0, diff));
     }
 
+    function setCardsByIndex(index: number, code: CardCode) {
+        const newCards = [...cards];
+        newCards[index] = code;
+        setCards(newCards);
+    }
+
     return (
         <div id="cardSimulator" className={styles.cardSimulator}>
             <h2>카드 시뮬레이터</h2>
             <div className={styles.cardSimulatorInner}>
                 <CardListLeft onClickEvent={controllColumnLength} col={columnLength} />
-                <CardList cards={cards} />
+                <CardList cards={cards}  setCardsEvent={setCardsByIndex} />
             </div>
         </div>
     );
