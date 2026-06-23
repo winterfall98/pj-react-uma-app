@@ -9,23 +9,35 @@ import GritIcon from "../assets/icon/type/4.svg?react";
 import IntIcon from "../assets/icon/type/5.svg?react";
 import FriendIcon from "../assets/icon/type/6.svg?react";
 
-function Search() {
-    // 검색
+
+type SearchProps = {
+    inputText: string,
+    setInputText: (name: string) => void;
+    SearchNameEvent: (name: string) => void;
+}
+
+function Search({ inputText, setInputText, SearchNameEvent }: SearchProps) {
+
     return (
         <input
             className={styles.searchInput}
             type="text"
             placeholder="카드 이름을 입력하세요"
+            value={inputText}
+            onChange={(e) => {
+                setInputText(e.currentTarget.value);
+                SearchNameEvent(e.currentTarget.value);
+            }}
         />
     );
 }
 
-type typeListProps = {
+type TypeListProps = {
     selectedType: number;
-    setSelectedType: (n: number) => void;
+    selectTypeEvent: (n: number) => void;
 };
 
-function TypeList({ selectedType, setSelectedType }: typeListProps) {
+function TypeList({ selectedType, selectTypeEvent }: TypeListProps) {
     const types = [
         { id: 1, label: "스피드", Icon: SpeedIcon },
         { id: 2, label: "스태미나", Icon: StaminaIcon },
@@ -41,11 +53,7 @@ function TypeList({ selectedType, setSelectedType }: typeListProps) {
                 <li key={id}>
                     <button
                         className={`${selectedType === id && styles["on"]}`}
-                        onClick={() =>
-                            selectedType === id
-                                ? setSelectedType(0)
-                                : setSelectedType(id)
-                        }
+                        onClick={() => selectTypeEvent(selectedType === id ? 0 : id)}
                     >
                         <Icon />
                         <span className="sr-only">{label}</span>
@@ -57,23 +65,29 @@ function TypeList({ selectedType, setSelectedType }: typeListProps) {
 }
 
 type CharaListProps = {
+    selectedType: number;
+    searchedName: string;
     cardList: CardListMap;
     setCardsEvent: (code: number) => void;
     closeLayerEvent: () => void;
 };
 
 // 캐릭터 리스트
-function CharaList({ cardList, closeLayerEvent, setCardsEvent }: CharaListProps) {
+function CharaList({ selectedType, searchedName, cardList, closeLayerEvent, setCardsEvent }: CharaListProps) {
     const isEmpty = Object.entries(cardList).length <= 0;
 
     function cardClickEvent(code: number) {
         setCardsEvent(code);
         closeLayerEvent();
     }
+
     return (
         <ul className={styles.charaList}>
         {!isEmpty &&
-            Object.entries(cardList).map(([code, card]) => (
+            Object.entries(cardList).filter(([, card]) => // 타입검색 && 이름검색
+                (selectedType === 0 || card.type === String(selectedType)) &&
+                (searchedName === '' || card.search.includes(searchedName)))
+            .map(([code, card]) => (
                 <li key={code}>
                     <button onClick={() => cardClickEvent(Number(code))}>
                         <img src={card.image} alt={card.name} />
@@ -94,7 +108,30 @@ type CardLayerProps = {
 
 function CardLayer({ isOpen, cardList, closeLayerEvent, setCardsEvent }: CardLayerProps) {
     const [selectedType, setSelectedType] = useState<number>(0);
+    const [inputText, setInputText] = useState<string>('');  // input text 표시값
+    const [searchedName, setSearchedName] = useState<string>('');  // 검색용
     const layerRef = useRef<HTMLDivElement>(null);
+    const timerRef = useRef<number | null>(null);
+
+
+    function SearchNameEvent(newText: string) {
+    const text = newText.replace(/\s/g, "");  // 공백 제거
+
+        if (timerRef.current) {
+            clearTimeout(timerRef.current);
+        }
+
+        timerRef.current = window.setTimeout(() => {
+            setSearchedName(text);
+            setSelectedType(0);  // 타입 필터 무효화
+        }, 300);
+    }
+
+    function selectTypeEvent(type: number) {
+        setSelectedType(type);
+        setInputText('');
+        setSearchedName('');
+    }
 
     useEffect(() => {
         function handleClickOutside(e: MouseEvent) {
@@ -105,7 +142,14 @@ function CardLayer({ isOpen, cardList, closeLayerEvent, setCardsEvent }: CardLay
         }
 
         document.addEventListener("mousedown", handleClickOutside);
-        return () => document.removeEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+
+            // 이름 검색 타이머 이벤트 제거
+            if (timerRef.current) {
+                clearTimeout(timerRef.current);
+            }
+        }
     }, [closeLayerEvent]);
 
     return (
@@ -117,12 +161,19 @@ function CardLayer({ isOpen, cardList, closeLayerEvent, setCardsEvent }: CardLay
                 </button>
             </div>
             <div className={styles.contents}>
-                <Search />
+                <Search
+                    inputText={inputText}
+                    setInputText={setInputText}
+                    SearchNameEvent={SearchNameEvent}
+                />
                 <TypeList
                     selectedType={selectedType}
-                    setSelectedType={setSelectedType}
+                    selectTypeEvent={selectTypeEvent}
+                    // setSelectedType={setSelectedType}
                 />
                 <CharaList
+                selectedType={selectedType}
+                searchedName={searchedName}
                 cardList={cardList}
                 setCardsEvent={setCardsEvent}
                 closeLayerEvent={closeLayerEvent}
