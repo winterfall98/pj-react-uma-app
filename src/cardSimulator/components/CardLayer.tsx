@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import styles from "../assets/styles/cardSimulator.module.scss";
 import type { CardListMap } from "./../CardSimulator.type";
+import { MOBILE_BREAK } from "../constants";
 
 import SpeedIcon from "../assets/icon/type/1.svg?react";
 import StaminaIcon from "../assets/icon/type/2.svg?react";
@@ -104,15 +105,44 @@ type CardLayerProps = {
     cardList: CardListMap;
     closeLayerEvent: () => void;
     setCardsEvent: (code: number) => void;
+    coordXY: number[];
 };
 
-function CardLayer({ isOpen, cardList, closeLayerEvent, setCardsEvent }: CardLayerProps) {
+function CardLayer({ isOpen, cardList, closeLayerEvent, setCardsEvent, coordXY }: CardLayerProps) {
     const [selectedType, setSelectedType] = useState<number>(0);
     const [inputText, setInputText] = useState<string>('');  // input text 표시값
     const [searchedName, setSearchedName] = useState<string>('');  // 검색용
     const layerRef = useRef<HTMLDivElement>(null);
     const timerRef = useRef<number | null>(null);
+    const [layerCoord, setLayerCoord] = useState<number[]>([0,0]);
 
+    const headerHeight = 65;
+    let layerWidth = 434;
+    let layerHeight = 640;
+
+    // Layer 위치 보정
+    let x = coordXY[0];
+    let y = coordXY[1];
+
+    if (window.innerWidth <= MOBILE_BREAK || window.innerHeight <= layerHeight) {
+        // window 폭이 layerWidth 보다 작을 때는 레이어 폭을 가득 채움
+        layerWidth = window.innerWidth;
+        layerHeight = window.innerHeight - headerHeight;
+        x = 0;
+        y = headerHeight;
+    } else {
+        // 레이어가 window 폭을 벗어나면 보정
+        if (x + layerWidth > window.innerWidth) {
+            x = x - layerWidth;
+        }
+        // 레이어가 window 높이를 벗어나면 보정
+        if (y + layerHeight > window.innerHeight) {
+            y = y - layerHeight;
+        }
+    }
+
+    x = Math.max(0, x);
+    y = Math.max(0, y);
 
     function SearchNameEvent(newText: string) {
     const text = newText.replace(/\s/g, "");  // 공백 제거
@@ -151,9 +181,17 @@ function CardLayer({ isOpen, cardList, closeLayerEvent, setCardsEvent }: CardLay
             }
         }
     }, [closeLayerEvent]);
-
     return (
-        <div className={styles.layer} ref={layerRef}>
+        <div
+            className={styles.layer}
+            ref={layerRef}
+            style={{
+                width: `${layerWidth}px`,
+                height: `${layerHeight}px`,
+                top: `${y}px`,
+                left: `${x}px`,
+            }}
+        >
             <div className={styles.header}>
                 <h4>서포트 카드 리스트</h4>
                 <button onClick={closeLayerEvent}>

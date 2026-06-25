@@ -45,7 +45,7 @@ async function setCharaDatas() {
 type CardProps = {
     key: number;
     code: CardCode;
-    openLayer: () => void;
+    openLayer: (e:React.MouseEvent<HTMLElement>) => void;
     removeThisCardEvent: () => void;
 };
 
@@ -54,7 +54,7 @@ function Card({ code, openLayer, removeThisCardEvent }: CardProps) {
     return (
         <>
             <div className={`${styles.card} ${code !== false && styles.on}`}>
-                <button className={styles.cardSlot} onClick={(e) => {e.stopPropagation(); openLayer(); }}>
+                <button className={styles.cardSlot} onClick={(e) => {e.stopPropagation(); openLayer(e); }}>
                     {code !== false ? (
                         <img
                             src={cachedCardList[code]['image']}
@@ -101,12 +101,16 @@ type cardListProps = {
 function CardList({ cards, setCardsEvent }: cardListProps) {
     const [layerIsOpen, setLayerIsOpen] = useState<boolean>(false);
     const [selectedSlot, setSelectedSlot] = useState<number | null>(null);
+    const [mouseCoordXY, setMouseCoordXY] = useState<number[]>([0, 0]);
 
-    async function openLayer(index: number) {
+    async function openLayer(e:React.MouseEvent<HTMLElement>, index: number) {
         await setCharaDatas();
         setSelectedSlot(index);
         setLayerIsOpen(true);
-        console.log(selectedSlot, index);
+        setMouseCoordXY([e.clientX, e.clientY]);
+
+        // console.log(selectedSlot, index);
+        // console.log(e.clientX, e.clientY);
     }
     function closeLayer() {
         setSelectedSlot(null);
@@ -129,7 +133,7 @@ function CardList({ cards, setCardsEvent }: cardListProps) {
                     <Card
                         key={index}
                         code={card}
-                        openLayer={() => openLayer(index)}
+                        openLayer={(e) => openLayer(e, index)}
                         removeThisCardEvent={() => removeThisCardEvent(index, false)}
                     />
                 ))}
@@ -141,6 +145,7 @@ function CardList({ cards, setCardsEvent }: cardListProps) {
                     cardList={cachedCardList}
                     closeLayerEvent={closeLayer}
                     setCardsEvent={(code: number) => setCardsEvent(Number(selectedSlot), code)}
+                    coordXY={mouseCoordXY}
 
                 />
             ) : (

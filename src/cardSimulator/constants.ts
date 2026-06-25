@@ -1,3 +1,5 @@
+export const MOBILE_BREAK = 640;
+
 export const SCARD_TYPE = [
   {
     type: "1",
