@@ -1,5 +1,7 @@
 $mobile-break: 640px;
-
+html {
+    scrollbar-gutter: stable;
+}
 .cardSimulator {
     margin: var(--space-lg);
     display: flex;

@@ -114,7 +114,6 @@ function CardLayer({ isOpen, cardList, closeLayerEvent, setCardsEvent, coordXY }
     const [searchedName, setSearchedName] = useState<string>('');  // 검색용
     const layerRef = useRef<HTMLDivElement>(null);
     const timerRef = useRef<number | null>(null);
-    const [layerCoord, setLayerCoord] = useState<number[]>([0,0]);
 
     const headerHeight = 65;
     let layerWidth = 434;
