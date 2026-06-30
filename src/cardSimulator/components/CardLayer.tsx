@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import styles from "../assets/styles/cardSimulator.module.scss";
-import type { CardListMap, CardStatData } from "./../CardSimulator.type";
+import type { CardListMap } from "./../CardSimulator.type";
 import { MOBILE_BREAK } from "../constants";
 
 import SpeedIcon from "../assets/icon/type/1.svg?react";

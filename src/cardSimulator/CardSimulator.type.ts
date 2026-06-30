@@ -1,12 +1,3 @@
-export type CardCode = number;
-
-export type CardSlot = {
-    code: CardCode;
-    stats: CardStatData;
-    limitBreak: number;
-};
-
-// card data (default data)
 export type CardData = {
     title?: string;
     name?: string;
@@ -15,9 +6,10 @@ export type CardData = {
     image?: string | '';
 };
 
-// card data list
 export type CardListMap = Record<number, CardData>;
 
+
+export type CardCode = number;
 
 export type BasicStat = {
     base: number;
@@ -42,4 +34,8 @@ export type DataTypes = {
 
 export type CardStatData = Record<string, DataTypes>;
 
-export type CardStatsMap = CardStatData[];
+export type CardSlot = {
+    code: CardCode;
+    stats: CardStatData;
+    limitBreak: number;
+};

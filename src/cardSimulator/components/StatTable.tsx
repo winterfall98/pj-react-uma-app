@@ -1,8 +1,6 @@
 import { EFFECT_TYPE } from "../constants";
 import type {
     CardSlot,
-    CardStatData,
-    CardStatsMap,
     ScenarioStat,
     ScenarioData,
     BasicStatData
