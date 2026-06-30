@@ -13,9 +13,9 @@ let cachedCardList: CardListMap = {};
 async function loadImages() {
     const entries = Object.entries(imageModules);
     const results = await Promise.all(
-        entries.map(async ([Path2D, loader]) => {
+        entries.map(async ([path, loader]) => {
             const url = await loader();
-            const code = Path2D.match(/(\d+)/)?.[0];
+            const code = path.match(/(\d+)/)?.[0];
             return [code, url];
         }),
     );
@@ -43,7 +43,6 @@ async function setCharaDatas() {
 }
 
 type CardProps = {
-    key: number;
     code: number;
     openLayer: (e:React.MouseEvent<HTMLElement>) => void;
     removeThisCardEvent: () => void;
@@ -94,12 +93,11 @@ function Card({ code, openLayer, removeThisCardEvent }: CardProps) {
 type cardListProps = {
     cards: CardCode[];
     setCardsEvent: (index: number, code: CardCode) => void;
-    setCardStatsEvent: (index:number, code: number) => void;
 };
 
 // 카드 리스트 (n개)
 // TODO: 슬롯 개수 셀렉트 받아서, 해당 값대로 Card 컴포넌트 렌더링하도록 변경 예정
-function CardList({ cards, setCardsEvent, setCardStatsEvent }: cardListProps) {
+function CardList({ cards, setCardsEvent }: cardListProps) {
     const [layerIsOpen, setLayerIsOpen] = useState<boolean>(false);
     const [selectedSlot, setSelectedSlot] = useState<number | null>(null);
     const [mouseCoordXY, setMouseCoordXY] = useState<number[]>([0, 0]);
@@ -121,7 +119,6 @@ function CardList({ cards, setCardsEvent, setCardStatsEvent }: cardListProps) {
     function removeThisCardEvent(index: number, code: number) {
         console.log(index);
         setCardsEvent(index, code);
-        setCardStatsEvent(index, code);
         setSelectedSlot(null);
     }
 
@@ -140,19 +137,15 @@ function CardList({ cards, setCardsEvent, setCardStatsEvent }: cardListProps) {
                     />
                 ))}
             </div>
-            {layerIsOpen ? (
+            {layerIsOpen && (
                 <CardLayer
                     key={selectedSlot}
-                    isOpen={layerIsOpen}
                     cardList={cachedCardList}
                     closeLayerEvent={closeLayer}
                     setCardsEvent={(code: number) => setCardsEvent(Number(selectedSlot), code)}
-                    setCardStatsEvent={(code: number) => setCardStatsEvent(Number(selectedSlot), code)}
                     coordXY={mouseCoordXY}
 
                 />
-            ) : (
-                <></>
             )}
         </>
     );

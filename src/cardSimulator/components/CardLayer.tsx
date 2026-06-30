@@ -71,15 +71,13 @@ type CharaListProps = {
     cardList: CardListMap;
     closeLayerEvent: () => void;
     setCardsEvent: (code: number) => void;
-    setCardStatsEvent: (code:number) => void;
 };
 
 // 캐릭터 리스트
-function CharaList({ selectedType, searchedName, cardList, closeLayerEvent, setCardsEvent, setCardStatsEvent }: CharaListProps) {
+function CharaList({ selectedType, searchedName, cardList, closeLayerEvent, setCardsEvent }: CharaListProps) {
     const isEmpty = Object.entries(cardList).length <= 0;
 
     function cardClickEvent(code: number) {
-        setCardStatsEvent(code);
         setCardsEvent(code);
         closeLayerEvent();
     }
@@ -89,7 +87,7 @@ function CharaList({ selectedType, searchedName, cardList, closeLayerEvent, setC
         {!isEmpty &&
             Object.entries(cardList).filter(([, card]) => // 타입검색 && 이름검색
                 (selectedType === 0 || card.type === String(selectedType)) &&
-                (searchedName === '' || card.search.includes(searchedName)))
+                (searchedName === '' || card.search?.includes(searchedName)))
             .map(([code, card]) => (
                 <li key={code}>
                     <button onClick={() => cardClickEvent(Number(code))}>
@@ -103,15 +101,13 @@ function CharaList({ selectedType, searchedName, cardList, closeLayerEvent, setC
 }
 
 type CardLayerProps = {
-    isOpen: boolean;
     cardList: CardListMap;
     closeLayerEvent: () => void;
     setCardsEvent: (code: number) => void;
-    setCardStatsEvent: (Code: number) => void;
     coordXY: number[];
 };
 
-function CardLayer({ isOpen, cardList, closeLayerEvent, setCardsEvent, setCardStatsEvent, coordXY }: CardLayerProps) {
+function CardLayer({ cardList, closeLayerEvent, setCardsEvent, coordXY }: CardLayerProps) {
     const [selectedType, setSelectedType] = useState<number>(0);
     const [inputText, setInputText] = useState<string>('');  // input text 표시값
     const [searchedName, setSearchedName] = useState<string>('');  // 검색용
@@ -216,7 +212,6 @@ function CardLayer({ isOpen, cardList, closeLayerEvent, setCardsEvent, setCardSt
                 searchedName={searchedName}
                 cardList={cardList}
                 setCardsEvent={setCardsEvent}
-                setCardStatsEvent={setCardStatsEvent}
                 closeLayerEvent={closeLayerEvent}
                 />
             </div>

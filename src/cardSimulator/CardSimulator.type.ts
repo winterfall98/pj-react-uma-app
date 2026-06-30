@@ -1,5 +1,11 @@
 export type CardCode = number;
 
+export type CardSlot = {
+    code: CardCode;
+    stats: CardStatData;
+    limitBreak: number;
+};
+
 // card data (default data)
 export type CardData = {
     title?: string;

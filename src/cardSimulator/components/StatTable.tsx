@@ -1,5 +1,7 @@
 import { EFFECT_TYPE } from "../constants";
 import type {
+    CardSlot,
+    CardStatData,
     CardStatsMap,
     ScenarioStat,
     ScenarioData,
@@ -50,13 +52,14 @@ function EffectHeader({ effect }: EffectHeaderProps) {
 
 type EffectBodyProps = {
     effect: Effect;
-    stats: CardStatsMap;
-    max: string;
+    slots: CardSlot[];
     scenarioNumber: number;
 }
 
-function EffectBody({effect, stats, max, scenarioNumber}: EffectBodyProps) {
+function EffectBody({effect, slots, scenarioNumber}: EffectBodyProps) {
     const scenarioKey: string = `scenario${scenarioNumber}`;
+    const stats = slots.map(slot => slot.stats);
+    const limitBreakValue = slots.map(slot => 'max' + String(slot.limitBreak));
 
     const renderBasicStats = (data: BasicStatData) => {
         const matched = Object.entries(data).find(([key]) => {
@@ -74,7 +77,7 @@ function EffectBody({effect, stats, max, scenarioNumber}: EffectBodyProps) {
     }
 
     const renderScenarioStats = (data: ScenarioData) => {
-        const stats = data[scenarioKey][Number(effect?.type)];
+        const stats = data[scenarioKey]?.[Number(effect?.type)];
         if (!stats) return null;
 
         return (
@@ -86,14 +89,14 @@ function EffectBody({effect, stats, max, scenarioNumber}: EffectBodyProps) {
 
     return (
         stats.map((v, i) => {
-            const maxData = v?.[max];
+            const limitBreakData = v?.[limitBreakValue?.[i]];
 
-            if(!maxData || Object.keys(maxData).length === 0) {
+            if(!limitBreakData || Object.keys(limitBreakData).length === 0) {
                 return <td key={i}></td>
             }
 
-            const basicData =  maxData.basics;
-            const scenarioData = maxData.scenarios;
+            const basicData =  limitBreakData.basics;
+            const scenarioData = limitBreakData.scenarios;
 
             return (
                 <td key={i}>
@@ -107,16 +110,13 @@ function EffectBody({effect, stats, max, scenarioNumber}: EffectBodyProps) {
 }
 
 type TableProps = {
-    stats: CardStatsMap;
+    slots: CardSlot[];
     scenarioNumber: number;
     isUsed: boolean;
 }
 
-function Table({ stats, scenarioNumber, isUsed }: TableProps) {
-    // 돌파 배열에 따라 데이터 교체
-    const max = 'max4'; // 임시.
-
-    console.log(stats);
+function Table({ slots, scenarioNumber, isUsed }: TableProps) {
+    console.log(slots);
     return (
         <div className={styles.statTable}>
             <table className={`${isUsed ? styles.used : ''}`}>
@@ -128,7 +128,7 @@ function Table({ stats, scenarioNumber, isUsed }: TableProps) {
                             <span>능력치</span>
                         </div>
                     </th>
-                    {Object.keys(stats).map((n,idx) => (
+                    {slots.map((n,idx) => (
                         <td key={idx}>
                             <select>
                                 <option key="4" value="4">4돌</option>
@@ -143,7 +143,7 @@ function Table({ stats, scenarioNumber, isUsed }: TableProps) {
                 {Object.values(EFFECT_TYPE).map((effect) => (
                     <tr key={effect.type}>
                         <EffectHeader effect={effect} />
-                        <EffectBody effect={effect} stats={stats} max={max} scenarioNumber={scenarioNumber}/>
+                        <EffectBody effect={effect} slots={slots} scenarioNumber={scenarioNumber}/>
                     </tr>
 
                 ))}

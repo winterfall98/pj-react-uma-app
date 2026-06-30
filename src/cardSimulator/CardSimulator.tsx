@@ -6,98 +6,76 @@ import StatTable from "./components/StatTable";
 import styles from "./assets/styles/cardSimulator.module.scss";
 import type {
     CardCode,
-    CardStatData,
+    CardSlot,
 } from "./CardSimulator.type";
 import { SCENARIO_LIST } from "./constants.ts";
 import { getCache, setCache, fetchCardStats } from "./CachedCardStats.ts";
 
+const defaultSlot: CardSlot = {code: 0, stats: {}, limitBreak: 4};
 
 function CardSimulator() {
     const recentScenario = SCENARIO_LIST.at(-1)?.type;
-    // TODO 리팩토링 (통합)
-    const [columnLength, setColumLength] = useState<(number)>(4);
-    const [cards, setCards] = useState<CardCode[]>([0, 0, 0, 0]);
-    const [cardStatsArray, setCardStatsArray] = useState<CardStatData[]>([{}, {}, {}, {}]);
-    const [limitbreaks, setLimitbreaks] = useState([4, 4, 4, 4]);
     const [selectedScenario, setSelectedScenario] = useState<number>(Number(recentScenario));
 
+    const [slots, setSlots] = useState<CardSlot[]>([
+        {code: 0, stats: {}, limitBreak: 4},
+        {code: 0, stats: {}, limitBreak: 4},
+        {code: 0, stats: {}, limitBreak: 4},
+        {code: 0, stats: {}, limitBreak: 4}
+    ]);
+
     const isUsed = useMemo(
-        () => cardStatsArray.some((item) => Object.keys(item).length > 0),
-        [cardStatsArray]
+        () => slots.some((item) => item.code !== 0),
+        [slots]
     )
 
-    function controllColumnLength(newLength: number) {
+    function controlSlotsLength(newLength: number) {
         if (newLength <= 0 || newLength > 9) return false;
 
-        const diff: number = newLength - cards.length;
+        const diff: number = newLength - slots.length;
 
         if (diff > 0) {
             // 덧붙이기
-            const cPadding: number[] = new Array(diff).fill(0);
-            AddCardsCol(cPadding);
+            const newSlots: CardSlot[] = Array.from({ length: diff }, () => ({
+                ...defaultSlot
+            }));
 
-            const dPadding: CardStatData[] = new Array(diff).fill({} as CardStatData);
-            AddcardStatsCol(dPadding);
+            setSlots((prev) => [...prev, ...newSlots]);
         } else {
             // 자르기
-            cutCardsCol(diff);
-            cutCardStatsCol(diff);
+            setSlots((prev) => prev.slice(0, newLength));
         }
-
-        setColumLength(newLength);
     }
 
-    function AddCardsCol(padding: CardCode[]) {
-        setCards([...cards, ...padding]);
-    }
-
-    function AddcardStatsCol(padding: CardStatData[]) {
-        setCardStatsArray([...cardStatsArray, ...padding]);
-    }
-
-    function cutCardsCol(diff: number) {
-        setCards([...cards].slice(0, diff));
-    }
-
-    function cutCardStatsCol(diff: number) {
-        setCardStatsArray([...cardStatsArray].slice(0, diff));
-    }
-
-    function setCardsByIndex(index: number, code: CardCode) {
-        const newCards = [...cards];
-        newCards[index] = code;
-        setCards(newCards);
-    }
-
-    async function setCardStatArrayByIndex(index: number, code: number) {
-        let newData = {};
+    async function setSlotsByIndex(index: number, code: CardCode) {
+        let newStats = {};
 
         // 캐시 데이터 체크 후 fetch
         if (code > 0) {
-            newData = getCache(code);
-            if(!newData) {
+            newStats = getCache(code);
+            if(!newStats) {
                 const data = await fetchCardStats(code);
                 setCache(code, data);
-                newData = data;
+                newStats = data;
             }
         }
 
-        setCardStatsArray((prev) => {
-            const newCardStatsArray = [...prev];
-            newCardStatsArray[index] = newData;
-            return newCardStatsArray;
-        });
+        setSlots((prev) => {
+            const newSlots = [...prev];
+            newSlots[index] = {...prev[index], code, stats: newStats};
+            return newSlots;
+        })
     }
 
     return (
         <div id="cardSimulator" className={styles.cardSimulator}>
             <h2>카드 시뮬레이터</h2>
             <div className={styles.cardSimulatorInner}>
-                <CardListLeft onClickEvent={controllColumnLength} col={columnLength} />
-                <CardList cards={cards}  setCardsEvent={setCardsByIndex} setCardStatsEvent={setCardStatArrayByIndex} />
+                <CardListLeft onClickEvent={controlSlotsLength} col={slots.length} />
+                <CardList cards={slots.map(slot => slot.code)}  setCardsEvent={setSlotsByIndex} />
             </div>
             <ScenarioSelect selectedScenario={selectedScenario} setSelectedScenario={setSelectedScenario} />
-            <StatTable stats={cardStatsArray} isUsed={isUsed} scenarioNumber={selectedScenario}  />
+            <StatTable slots={slots} isUsed={isUsed} scenarioNumber={selectedScenario}  />
         </div>
     );
 }
