@@ -44,7 +44,7 @@ async function setCharaDatas() {
 
 type CardProps = {
     key: number;
-    code: CardCode;
+    code: number;
     openLayer: (e:React.MouseEvent<HTMLElement>) => void;
     removeThisCardEvent: () => void;
 };
@@ -53,9 +53,9 @@ function Card({ code, openLayer, removeThisCardEvent }: CardProps) {
     const linkUrl: string = "https://uma.inven.co.kr/";
     return (
         <>
-            <div className={`${styles.card} ${code !== false && styles.on}`}>
+            <div className={`${styles.card} ${code > 0 && styles.on}`}>
                 <button className={styles.cardSlot} onClick={(e) => {e.stopPropagation(); openLayer(e); }}>
-                    {code !== false ? (
+                    {code > 0 ? (
                         <img
                             src={cachedCardList[code]['image']}
                             title={cachedCardList[code]['name']}
@@ -73,7 +73,7 @@ function Card({ code, openLayer, removeThisCardEvent }: CardProps) {
                     <span className={`${styles.sparkle} ${styles.s3}`}></span>
                 </button>
                 <a
-                    className={code !== false ? styles.on : styles.disabled}
+                    className={code > 0 ? styles.on : styles.disabled}
                     href={linkUrl}
                     target="_blank"
                 >
@@ -94,11 +94,12 @@ function Card({ code, openLayer, removeThisCardEvent }: CardProps) {
 type cardListProps = {
     cards: CardCode[];
     setCardsEvent: (index: number, code: CardCode) => void;
+    setCardStatsEvent: (index:number, code: number) => void;
 };
 
 // 카드 리스트 (n개)
 // TODO: 슬롯 개수 셀렉트 받아서, 해당 값대로 Card 컴포넌트 렌더링하도록 변경 예정
-function CardList({ cards, setCardsEvent }: cardListProps) {
+function CardList({ cards, setCardsEvent, setCardStatsEvent }: cardListProps) {
     const [layerIsOpen, setLayerIsOpen] = useState<boolean>(false);
     const [selectedSlot, setSelectedSlot] = useState<number | null>(null);
     const [mouseCoordXY, setMouseCoordXY] = useState<number[]>([0, 0]);
@@ -117,9 +118,10 @@ function CardList({ cards, setCardsEvent }: cardListProps) {
         setLayerIsOpen(false);
     }
 
-    function removeThisCardEvent(index: number, code: CardCode) {
+    function removeThisCardEvent(index: number, code: number) {
         console.log(index);
         setCardsEvent(index, code);
+        setCardStatsEvent(index, code);
         setSelectedSlot(null);
     }
 
@@ -134,7 +136,7 @@ function CardList({ cards, setCardsEvent }: cardListProps) {
                         key={index}
                         code={card}
                         openLayer={(e) => openLayer(e, index)}
-                        removeThisCardEvent={() => removeThisCardEvent(index, false)}
+                        removeThisCardEvent={() => removeThisCardEvent(index, 0)}
                     />
                 ))}
             </div>
@@ -145,6 +147,7 @@ function CardList({ cards, setCardsEvent }: cardListProps) {
                     cardList={cachedCardList}
                     closeLayerEvent={closeLayer}
                     setCardsEvent={(code: number) => setCardsEvent(Number(selectedSlot), code)}
+                    setCardStatsEvent={(code: number) => setCardStatsEvent(Number(selectedSlot), code)}
                     coordXY={mouseCoordXY}
 
                 />

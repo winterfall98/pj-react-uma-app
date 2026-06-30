@@ -322,4 +322,78 @@ html {
             }
         }
     }
+
+
+    .trainingSelect {
+        select {
+            width: 100%;
+            padding: 0 var(--space-xsm);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md);
+            color: var(--black-800);
+        }
+    }
+
+    .statTable {
+        border-radius: var(--radius-lg);
+        overflow: hidden;
+        border: 1px solid var(--black-200);
+        table {
+            width: 100%;
+            table-layout: fixed;
+
+            &.used {
+                tr:not(:first-child):not(:has(td div)) {
+                    display: none;
+                }
+            }
+
+            tr {
+                background: var(--color-bg-second);
+
+                &:nth-child(2n) {
+                    background: var(--white);
+                }
+
+                th {
+                    width: var(--left-width);
+                    padding: var(--space-half);
+                    background: var(--color-header-bg);
+                    font-size: var(--font-sm);
+                    color: var(--white);
+                    letter-spacing: var(--letter-spacing-md);
+                    div {
+                        display: flex;
+                        align-items: center;
+                        justify-content: left;
+                        padding-left: var(--space-half);
+                        gap: var(--space-half);
+                    }
+                }
+
+                td {
+                    padding: var(--space-half);
+                    text-align: center;
+                    font-size: var(--font-sm);
+                    select {
+                        width: 100%;
+                        border-color: var(--black-200);
+                        border-radius: var(--radius-md);
+                        text-align: center;
+                        color: var(--black-800);
+                    }
+                }
+
+                th, td:not(:last-child) {
+                    border-right: 1px solid var(--black-200);
+                }
+
+                &:not(:last-child) th, &:not(:last-child) td {
+                    border-bottom: 1px solid var(--black-200);
+                }
+            }
+        }
+
+    }
+
 }

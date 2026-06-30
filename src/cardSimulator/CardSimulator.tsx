@@ -1,17 +1,28 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import CardList from "./components/CardList";
 import CardListLeft from "./components/CardListLeft";
+import TrainingSelect from "./components/TrainingSelect";
+import StatTable from "./components/StatTable";
 import styles from "./assets/styles/cardSimulator.module.scss";
 import type {
     CardCode,
-    CardDetail
+    CardStatData,
 } from "./CardSimulator.type";
+import { getCache, setCache, fetchCardStats } from "./CachedCardStats.ts";
 
 
 function CardSimulator() {
+    // TODO 리팩토링 (통합)
     const [columnLength, setColumLength] = useState<(number)>(4);
-    const [cards, setCards] = useState<CardCode[]>([false, false, false, false]);
-    const [cardDetails, setCardDetails] = useState<CardDetail[]>([false, false, false, false])
+    const [cards, setCards] = useState<CardCode[]>([0, 0, 0, 0]);
+    const [cardStatsArray, setCardStatsArray] = useState<CardStatData[]>([{}, {}, {}, {}]);
+    const [limitbreaks, setLimitbreaks] = useState([4, 4, 4, 4]);
+    const [selectedTraining, setSelectedTraining] = useState<string>("");
+
+    const isUsed = useMemo(
+        () => cardStatsArray.some((item) => Object.keys(item).length > 0),
+        [cardStatsArray]
+    )
 
     function controllColumnLength(newLength: number) {
         if (newLength <= 0 || newLength > 9) return false;
@@ -20,32 +31,34 @@ function CardSimulator() {
 
         if (diff > 0) {
             // 덧붙이기
-            const padding: false[] = new Array(diff).fill(false);
-            AddCardsCol(padding);
-            AddCardDetailsCol(padding);
+            const cPadding: number[] = new Array(diff).fill(0);
+            AddCardsCol(cPadding);
+
+            const dPadding: CardStatData[] = new Array(diff).fill({} as CardStatData);
+            AddcardStatsCol(dPadding);
         } else {
             // 자르기
             cutCardsCol(diff);
-            cutDetailsCol(diff);
+            cutCardStatsCol(diff);
         }
 
         setColumLength(newLength);
     }
 
-    function AddCardsCol(padding: false[]) {
+    function AddCardsCol(padding: CardCode[]) {
         setCards([...cards, ...padding]);
     }
 
-    function AddCardDetailsCol(padding: false[]) {
-        setCardDetails([...cardDetails, padding]);
+    function AddcardStatsCol(padding: CardStatData[]) {
+        setCardStatsArray([...cardStatsArray, ...padding]);
     }
 
     function cutCardsCol(diff: number) {
         setCards([...cards].slice(0, diff));
     }
 
-    function cutDetailsCol(diff: number) {
-        setCardDetails([...cardDetails].slice(0, diff));
+    function cutCardStatsCol(diff: number) {
+        setCardStatsArray([...cardStatsArray].slice(0, diff));
     }
 
     function setCardsByIndex(index: number, code: CardCode) {
@@ -54,13 +67,35 @@ function CardSimulator() {
         setCards(newCards);
     }
 
+    async function setCardStatArrayByIndex(index: number, code: number) {
+        let newData = {};
+
+        // 캐시 데이터 체크 후 fetch
+        if (code > 0) {
+            newData = getCache(code);
+            if(!newData) {
+                const data = await fetchCardStats(code);
+                setCache(code, data);
+                newData = data;
+            }
+        }
+
+        setCardStatsArray((prev) => {
+            const newCardStatsArray = [...prev];
+            newCardStatsArray[index] = newData;
+            return newCardStatsArray;
+        });
+    }
+
     return (
         <div id="cardSimulator" className={styles.cardSimulator}>
             <h2>카드 시뮬레이터</h2>
             <div className={styles.cardSimulatorInner}>
                 <CardListLeft onClickEvent={controllColumnLength} col={columnLength} />
-                <CardList cards={cards}  setCardsEvent={setCardsByIndex} />
+                <CardList cards={cards}  setCardsEvent={setCardsByIndex} setCardStatsEvent={setCardStatArrayByIndex} />
             </div>
+            <TrainingSelect selectedTraining={selectedTraining} setSelectedTraining={setSelectedTraining} />
+            <StatTable stats={cardStatsArray} isUsed={isUsed} />
         </div>
     );
 }

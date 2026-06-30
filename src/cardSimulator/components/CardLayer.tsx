@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import styles from "../assets/styles/cardSimulator.module.scss";
-import type { CardListMap } from "./../CardSimulator.type";
+import type { CardListMap, CardStatData } from "./../CardSimulator.type";
 import { MOBILE_BREAK } from "../constants";
 
 import SpeedIcon from "../assets/icon/type/1.svg?react";
@@ -69,15 +69,17 @@ type CharaListProps = {
     selectedType: number;
     searchedName: string;
     cardList: CardListMap;
-    setCardsEvent: (code: number) => void;
     closeLayerEvent: () => void;
+    setCardsEvent: (code: number) => void;
+    setCardStatsEvent: (code:number) => void;
 };
 
 // 캐릭터 리스트
-function CharaList({ selectedType, searchedName, cardList, closeLayerEvent, setCardsEvent }: CharaListProps) {
+function CharaList({ selectedType, searchedName, cardList, closeLayerEvent, setCardsEvent, setCardStatsEvent }: CharaListProps) {
     const isEmpty = Object.entries(cardList).length <= 0;
 
     function cardClickEvent(code: number) {
+        setCardStatsEvent(code);
         setCardsEvent(code);
         closeLayerEvent();
     }
@@ -105,10 +107,11 @@ type CardLayerProps = {
     cardList: CardListMap;
     closeLayerEvent: () => void;
     setCardsEvent: (code: number) => void;
+    setCardStatsEvent: (Code: number) => void;
     coordXY: number[];
 };
 
-function CardLayer({ isOpen, cardList, closeLayerEvent, setCardsEvent, coordXY }: CardLayerProps) {
+function CardLayer({ isOpen, cardList, closeLayerEvent, setCardsEvent, setCardStatsEvent, coordXY }: CardLayerProps) {
     const [selectedType, setSelectedType] = useState<number>(0);
     const [inputText, setInputText] = useState<string>('');  // input text 표시값
     const [searchedName, setSearchedName] = useState<string>('');  // 검색용
@@ -213,6 +216,7 @@ function CardLayer({ isOpen, cardList, closeLayerEvent, setCardsEvent, coordXY }
                 searchedName={searchedName}
                 cardList={cardList}
                 setCardsEvent={setCardsEvent}
+                setCardStatsEvent={setCardStatsEvent}
                 closeLayerEvent={closeLayerEvent}
                 />
             </div>
