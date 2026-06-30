@@ -108,14 +108,13 @@ function EffectBody({effect, stats, max, scenarioNumber}: EffectBodyProps) {
 
 type TableProps = {
     stats: CardStatsMap;
+    scenarioNumber: number;
     isUsed: boolean;
 }
 
-function Table({ stats, isUsed }: TableProps) {
+function Table({ stats, scenarioNumber, isUsed }: TableProps) {
     // 돌파 배열에 따라 데이터 교체
     const max = 'max4'; // 임시.
-    // 상위에서 훈련 선택해서 시나리오번호 내려주기
-    const scenarioNumber = 1; //임시
 
     console.log(stats);
     return (

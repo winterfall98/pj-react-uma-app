@@ -1,23 +1,25 @@
 import { useState, useMemo } from "react";
 import CardList from "./components/CardList";
 import CardListLeft from "./components/CardListLeft";
-import TrainingSelect from "./components/TrainingSelect";
+import ScenarioSelect from "./components/ScenarioSelect.tsx";
 import StatTable from "./components/StatTable";
 import styles from "./assets/styles/cardSimulator.module.scss";
 import type {
     CardCode,
     CardStatData,
 } from "./CardSimulator.type";
+import { SCENARIO_LIST } from "./constants.ts";
 import { getCache, setCache, fetchCardStats } from "./CachedCardStats.ts";
 
 
 function CardSimulator() {
+    const recentScenario = SCENARIO_LIST.at(-1)?.type;
     // TODO 리팩토링 (통합)
     const [columnLength, setColumLength] = useState<(number)>(4);
     const [cards, setCards] = useState<CardCode[]>([0, 0, 0, 0]);
     const [cardStatsArray, setCardStatsArray] = useState<CardStatData[]>([{}, {}, {}, {}]);
     const [limitbreaks, setLimitbreaks] = useState([4, 4, 4, 4]);
-    const [selectedTraining, setSelectedTraining] = useState<string>("");
+    const [selectedScenario, setSelectedScenario] = useState<number>(Number(recentScenario));
 
     const isUsed = useMemo(
         () => cardStatsArray.some((item) => Object.keys(item).length > 0),
@@ -94,8 +96,8 @@ function CardSimulator() {
                 <CardListLeft onClickEvent={controllColumnLength} col={columnLength} />
                 <CardList cards={cards}  setCardsEvent={setCardsByIndex} setCardStatsEvent={setCardStatArrayByIndex} />
             </div>
-            <TrainingSelect selectedTraining={selectedTraining} setSelectedTraining={setSelectedTraining} />
-            <StatTable stats={cardStatsArray} isUsed={isUsed} />
+            <ScenarioSelect selectedScenario={selectedScenario} setSelectedScenario={setSelectedScenario} />
+            <StatTable stats={cardStatsArray} isUsed={isUsed} scenarioNumber={selectedScenario}  />
         </div>
     );
 }

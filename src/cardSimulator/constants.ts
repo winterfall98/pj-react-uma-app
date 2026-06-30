@@ -127,7 +127,7 @@ export const TRAINING_CONST = {
   },
 } as const;
 
-export const TRAINING_LIST = [
+export const SCENARIO_LIST = [
   {type: "1", name: "URA"},
   {type: "2", name: "아오하루"},
   {type: "3", name: "Make a new track!!"},
