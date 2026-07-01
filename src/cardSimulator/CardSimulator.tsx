@@ -67,15 +67,23 @@ function CardSimulator() {
         })
     }
 
+    function setSlotsByLimitBreak(number: number, index: number) {
+        setSlots((prev) => {
+            const newSlots = [...prev];
+            newSlots[index] = {...prev[index], limitBreak: number};
+            return newSlots;
+        })
+    }
+
     return (
         <div id="cardSimulator" className={styles.cardSimulator}>
             <h2>카드 시뮬레이터</h2>
             <div className={styles.cardSimulatorInner}>
                 <CardListLeft onClickEvent={controlSlotsLength} col={slots.length} />
-                <CardList cards={slots.map(slot => slot.code)}  setCardsEvent={setSlotsByIndex} />
+                <CardList cards={slots.map(slot => slot.code)} setCardsEvent={setSlotsByIndex} />
             </div>
             <ScenarioSelect selectedScenario={selectedScenario} setSelectedScenario={setSelectedScenario} />
-            <StatTable slots={slots} isUsed={isUsed} scenarioNumber={selectedScenario}  />
+            <StatTable slots={slots} isUsed={isUsed} scenarioNumber={selectedScenario} limitBreakEvent={setSlotsByLimitBreak} />
         </div>
     );
 }

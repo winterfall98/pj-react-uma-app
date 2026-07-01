@@ -111,9 +111,10 @@ type TableProps = {
     slots: CardSlot[];
     scenarioNumber: number;
     isUsed: boolean;
+    limitBreakEvent: (n: number, i: number) => void;
 }
 
-function Table({ slots, scenarioNumber, isUsed }: TableProps) {
+function Table({ slots, scenarioNumber, isUsed, limitBreakEvent }: TableProps) {
     console.log(slots);
     return (
         <div className={styles.statTable}>
@@ -128,7 +129,7 @@ function Table({ slots, scenarioNumber, isUsed }: TableProps) {
                     </th>
                     {slots.map((n,idx) => (
                         <td key={idx}>
-                            <select>
+                            <select value={slots[idx].limitBreak} onChange={(e) => limitBreakEvent(Number(e.target.value), idx)}>
                                 <option key="4" value="4">4돌</option>
                                 <option key="3" value="3">3돌</option>
                                 <option key="2" value="2">2돌</option>
