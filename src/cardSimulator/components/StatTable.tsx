@@ -69,7 +69,7 @@ function EffectBody({effect, slots, scenarioNumber}: EffectBodyProps) {
 
         return (
             <div className={styles.stat}>
-                {stat.base}{stat.unique && `+${stat.unique}`}
+                {stat.base}{stat.unique && <span className={styles.unique}>+{stat.unique}</span>}
             </div>
         )
     }

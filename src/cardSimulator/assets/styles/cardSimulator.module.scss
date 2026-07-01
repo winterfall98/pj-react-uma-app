@@ -220,6 +220,7 @@ html {
                 padding: var(--space-xsm);
                 color: var(--white);
                 letter-spacing: var(--letter-spacing-md);
+                filter: saturate(1.5);
             }
 
             button {
@@ -381,6 +382,9 @@ html {
                         border-radius: var(--radius-md);
                         text-align: center;
                         color: var(--black-800);
+                    }
+                    .unique {
+                        color: #ec2929;
                     }
                 }
 

@@ -42,6 +42,7 @@ async function setCharaDatas() {
     console.log('cards => ', cachedCardList);
 }
 
+
 type CardProps = {
     code: number;
     openLayer: (e:React.MouseEvent<HTMLElement>) => void;

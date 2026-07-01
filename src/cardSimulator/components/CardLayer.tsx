@@ -33,6 +33,7 @@ function Search({ inputText, setInputText, SearchNameEvent }: SearchProps) {
     );
 }
 
+
 type TypeListProps = {
     selectedType: number;
     selectTypeEvent: (n: number) => void;
@@ -64,6 +65,7 @@ function TypeList({ selectedType, selectTypeEvent }: TypeListProps) {
         </ul>
     );
 }
+
 
 type CharaListProps = {
     selectedType: number;
@@ -100,6 +102,9 @@ function CharaList({ selectedType, searchedName, cardList, closeLayerEvent, setC
     );
 }
 
+
+const headerHeight = 65;
+
 type CardLayerProps = {
     cardList: CardListMap;
     closeLayerEvent: () => void;
@@ -114,13 +119,13 @@ function CardLayer({ cardList, closeLayerEvent, setCardsEvent, coordXY }: CardLa
     const layerRef = useRef<HTMLDivElement>(null);
     const timerRef = useRef<number | null>(null);
 
-    const headerHeight = 65;
     let layerWidth = 434;
     let layerHeight = 640;
 
     // Layer 위치 보정
     let x = coordXY[0];
-    let y = coordXY[1];
+    let y = coordXY[1] + window.scrollY;
+    console.log(y, window.scrollY);
 
     if (window.innerWidth <= MOBILE_BREAK || window.innerHeight <= layerHeight) {
         // window 폭이 layerWidth 보다 작을 때는 레이어 폭을 가득 채움
@@ -135,12 +140,15 @@ function CardLayer({ cardList, closeLayerEvent, setCardsEvent, coordXY }: CardLa
         }
         // 레이어가 window 높이를 벗어나면 보정
         if (y + layerHeight > window.innerHeight) {
-            y = y - layerHeight;
+            y = y - layerHeight + headerHeight;
+            y = y < 0 ? window.scrollY + headerHeight : y;
         }
     }
 
     x = Math.max(0, x);
     y = Math.max(0, y);
+
+
 
     function SearchNameEvent(newText: string) {
     const text = newText.replace(/\s/g, "");  // 공백 제거
@@ -205,7 +213,6 @@ function CardLayer({ cardList, closeLayerEvent, setCardsEvent, coordXY }: CardLa
                 <TypeList
                     selectedType={selectedType}
                     selectTypeEvent={selectTypeEvent}
-                    // setSelectedType={setSelectedType}
                 />
                 <CharaList
                 selectedType={selectedType}
