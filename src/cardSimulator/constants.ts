@@ -77,8 +77,8 @@ export const EFFECT_TYPE: Record<number, EffectTypeItem> = {
 } as const;
 
 export const SCENARIO_LIST = [
-  {type: "1", name: "URA"},
-  {type: "2", name: "아오하루"},
-  {type: "3", name: "Make a new track!!"},
-  {type: "4", name: "그랜드 라이브"},
+  {type: "1", name: "신설! URA 파이널스"},
+  {type: "2", name: "아오하루배 ~빛나라 팀의 인연~"},
+  {type: "3", name: "Make a new track!! ~클라이맥스 개막~"},
+  {type: "4", name: "이어라, 비춰라, 빛나라. 우리들의 그랜드 라이브"},
 ] as const;
