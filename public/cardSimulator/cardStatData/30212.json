@@ -1,0 +1,616 @@
+{
+    "max0": {
+        "basics": {
+            "1": { "base": 15 },
+            "2": { "base": 20 },
+            "6": { "base": 1 },
+            "8": { "base": 0, "unique": 10 }
+        },
+        "scenarios": {
+            "scenario1": {
+                "10003": [
+                    { "name": "스피드", "value": 20 },
+                    { "name": "파워", "value": 10 },
+                    { "name": "pt", "value": 2 }
+                ],
+                "10004": [
+                    { "name": "스태미나", "value": 21 },
+                    { "name": "근성", "value": 11 },
+                    { "name": "pt", "value": 3 }
+                ],
+                "10005": [
+                    { "name": "스태미나", "value": 10 },
+                    { "name": "파워", "value": 17 },
+                    { "name": "pt", "value": 2 }
+                ],
+                "10006": [
+                    { "name": "스피드", "value": 7 },
+                    { "name": "파워", "value": 7 },
+                    { "name": "근성", "value": 18 },
+                    { "name": "pt", "value": 2 }
+                ],
+                "10007": [
+                    { "name": "스피드", "value": 5 },
+                    { "name": "지능", "value": 18 },
+                    { "name": "pt", "value": 2 }
+                ]
+            },
+            "scenario2": {
+                "10003": [
+                    { "name": "스피드", "value": 17 },
+                    { "name": "파워", "value": 8 },
+                    { "name": "pt", "value": 5 }
+                ],
+                "10004": [
+                    { "name": "스태미나", "value": 19 },
+                    { "name": "근성", "value": 14 },
+                    { "name": "pt", "value": 6 }
+                ],
+                "10005": [
+                    { "name": "스태미나", "value": 8 },
+                    { "name": "파워", "value": 18 },
+                    { "name": "pt", "value": 5 }
+                ],
+                "10006": [
+                    { "name": "스피드", "value": 5 },
+                    { "name": "파워", "value": 5 },
+                    { "name": "근성", "value": 15 },
+                    { "name": "pt", "value": 5 }
+                ],
+                "10007": [
+                    { "name": "스피드", "value": 5 },
+                    { "name": "지능", "value": 14 },
+                    { "name": "pt", "value": 7 }
+                ]
+            },
+            "scenario3": {
+                "10003": [
+                    { "name": "스피드", "value": 17 },
+                    { "name": "파워", "value": 8 },
+                    { "name": "pt", "value": 2 }
+                ],
+                "10004": [
+                    { "name": "스태미나", "value": 18 },
+                    { "name": "근성", "value": 9 },
+                    { "name": "pt", "value": 3 }
+                ],
+                "10005": [
+                    { "name": "스태미나", "value": 8 },
+                    { "name": "파워", "value": 14 },
+                    { "name": "pt", "value": 2 }
+                ],
+                "10006": [
+                    { "name": "스피드", "value": 5 },
+                    { "name": "파워", "value": 5 },
+                    { "name": "근성", "value": 15 },
+                    { "name": "pt", "value": 2 }
+                ],
+                "10007": [
+                    { "name": "스피드", "value": 5 },
+                    { "name": "지능", "value": 14 },
+                    { "name": "pt", "value": 4 }
+                ]
+            },
+            "scenario4": {
+                "10003": [
+                    { "name": "스피드", "value": 17 },
+                    { "name": "파워", "value": 8 },
+                    { "name": "pt", "value": 5 }
+                ],
+                "10004": [
+                    { "name": "스태미나", "value": 19 },
+                    { "name": "근성", "value": 14 },
+                    { "name": "pt", "value": 6 }
+                ],
+                "10005": [
+                    { "name": "스태미나", "value": 8 },
+                    { "name": "파워", "value": 18 },
+                    { "name": "pt", "value": 5 }
+                ],
+                "10006": [
+                    { "name": "스피드", "value": 4 },
+                    { "name": "파워", "value": 4 },
+                    { "name": "근성", "value": 17 },
+                    { "name": "pt", "value": 5 }
+                ],
+                "10007": [
+                    { "name": "스피드", "value": 5 },
+                    { "name": "지능", "value": 14 },
+                    { "name": "pt", "value": 7 }
+                ]
+            }
+        }
+    },
+    "max1": {
+        "basics": {
+            "1": { "base": 16 },
+            "2": { "base": 20 },
+            "4": { "base": 1 },
+            "6": { "base": 1 },
+            "8": { "base": 0, "unique": 10 }
+        },
+        "scenarios": {
+            "scenario1": {
+                "10003": [
+                    { "name": "스피드", "value": 20 },
+                    { "name": "파워", "value": 10 },
+                    { "name": "pt", "value": 2 }
+                ],
+                "10004": [
+                    { "name": "스태미나", "value": 23 },
+                    { "name": "근성", "value": 11 },
+                    { "name": "pt", "value": 3 }
+                ],
+                "10005": [
+                    { "name": "스태미나", "value": 11 },
+                    { "name": "파워", "value": 17 },
+                    { "name": "pt", "value": 2 }
+                ],
+                "10006": [
+                    { "name": "스피드", "value": 7 },
+                    { "name": "파워", "value": 7 },
+                    { "name": "근성", "value": 18 },
+                    { "name": "pt", "value": 2 }
+                ],
+                "10007": [
+                    { "name": "스피드", "value": 5 },
+                    { "name": "지능", "value": 18 },
+                    { "name": "pt", "value": 2 }
+                ]
+            },
+            "scenario2": {
+                "10003": [
+                    { "name": "스피드", "value": 17 },
+                    { "name": "파워", "value": 8 },
+                    { "name": "pt", "value": 5 }
+                ],
+                "10004": [
+                    { "name": "스태미나", "value": 21 },
+                    { "name": "근성", "value": 14 },
+                    { "name": "pt", "value": 6 }
+                ],
+                "10005": [
+                    { "name": "스태미나", "value": 10 },
+                    { "name": "파워", "value": 18 },
+                    { "name": "pt", "value": 5 }
+                ],
+                "10006": [
+                    { "name": "스피드", "value": 5 },
+                    { "name": "파워", "value": 5 },
+                    { "name": "근성", "value": 15 },
+                    { "name": "pt", "value": 5 }
+                ],
+                "10007": [
+                    { "name": "스피드", "value": 5 },
+                    { "name": "지능", "value": 14 },
+                    { "name": "pt", "value": 7 }
+                ]
+            },
+            "scenario3": {
+                "10003": [
+                    { "name": "스피드", "value": 17 },
+                    { "name": "파워", "value": 8 },
+                    { "name": "pt", "value": 2 }
+                ],
+                "10004": [
+                    { "name": "스태미나", "value": 19 },
+                    { "name": "근성", "value": 9 },
+                    { "name": "pt", "value": 3 }
+                ],
+                "10005": [
+                    { "name": "스태미나", "value": 10 },
+                    { "name": "파워", "value": 14 },
+                    { "name": "pt", "value": 2 }
+                ],
+                "10006": [
+                    { "name": "스피드", "value": 5 },
+                    { "name": "파워", "value": 5 },
+                    { "name": "근성", "value": 15 },
+                    { "name": "pt", "value": 2 }
+                ],
+                "10007": [
+                    { "name": "스피드", "value": 5 },
+                    { "name": "지능", "value": 14 },
+                    { "name": "pt", "value": 4 }
+                ]
+            },
+            "scenario4": {
+                "10003": [
+                    { "name": "스피드", "value": 17 },
+                    { "name": "파워", "value": 8 },
+                    { "name": "pt", "value": 5 }
+                ],
+                "10004": [
+                    { "name": "스태미나", "value": 21 },
+                    { "name": "근성", "value": 14 },
+                    { "name": "pt", "value": 6 }
+                ],
+                "10005": [
+                    { "name": "스태미나", "value": 10 },
+                    { "name": "파워", "value": 18 },
+                    { "name": "pt", "value": 5 }
+                ],
+                "10006": [
+                    { "name": "스피드", "value": 4 },
+                    { "name": "파워", "value": 4 },
+                    { "name": "근성", "value": 17 },
+                    { "name": "pt", "value": 5 }
+                ],
+                "10007": [
+                    { "name": "스피드", "value": 5 },
+                    { "name": "지능", "value": 14 },
+                    { "name": "pt", "value": 7 }
+                ]
+            }
+        }
+    },
+    "max2": {
+        "basics": {
+            "1": { "base": 18 },
+            "2": { "base": 20 },
+            "4": { "base": 1 },
+            "6": { "base": 1 },
+            "8": { "base": 0, "unique": 10 }
+        },
+        "scenarios": {
+            "scenario1": {
+                "10003": [
+                    { "name": "스피드", "value": 20 },
+                    { "name": "파워", "value": 10 },
+                    { "name": "pt", "value": 2 }
+                ],
+                "10004": [
+                    { "name": "스태미나", "value": 23 },
+                    { "name": "근성", "value": 11 },
+                    { "name": "pt", "value": 3 }
+                ],
+                "10005": [
+                    { "name": "스태미나", "value": 11 },
+                    { "name": "파워", "value": 17 },
+                    { "name": "pt", "value": 2 }
+                ],
+                "10006": [
+                    { "name": "스피드", "value": 7 },
+                    { "name": "파워", "value": 7 },
+                    { "name": "근성", "value": 18 },
+                    { "name": "pt", "value": 2 }
+                ],
+                "10007": [
+                    { "name": "스피드", "value": 5 },
+                    { "name": "지능", "value": 18 },
+                    { "name": "pt", "value": 2 }
+                ]
+            },
+            "scenario2": {
+                "10003": [
+                    { "name": "스피드", "value": 17 },
+                    { "name": "파워", "value": 8 },
+                    { "name": "pt", "value": 5 }
+                ],
+                "10004": [
+                    { "name": "스태미나", "value": 21 },
+                    { "name": "근성", "value": 15 },
+                    { "name": "pt", "value": 6 }
+                ],
+                "10005": [
+                    { "name": "스태미나", "value": 10 },
+                    { "name": "파워", "value": 18 },
+                    { "name": "pt", "value": 5 }
+                ],
+                "10006": [
+                    { "name": "스피드", "value": 5 },
+                    { "name": "파워", "value": 5 },
+                    { "name": "근성", "value": 15 },
+                    { "name": "pt", "value": 5 }
+                ],
+                "10007": [
+                    { "name": "스피드", "value": 5 },
+                    { "name": "지능", "value": 14 },
+                    { "name": "pt", "value": 7 }
+                ]
+            },
+            "scenario3": {
+                "10003": [
+                    { "name": "스피드", "value": 17 },
+                    { "name": "파워", "value": 8 },
+                    { "name": "pt", "value": 2 }
+                ],
+                "10004": [
+                    { "name": "스태미나", "value": 20 },
+                    { "name": "근성", "value": 10 },
+                    { "name": "pt", "value": 3 }
+                ],
+                "10005": [
+                    { "name": "스태미나", "value": 10 },
+                    { "name": "파워", "value": 14 },
+                    { "name": "pt", "value": 2 }
+                ],
+                "10006": [
+                    { "name": "스피드", "value": 5 },
+                    { "name": "파워", "value": 5 },
+                    { "name": "근성", "value": 15 },
+                    { "name": "pt", "value": 2 }
+                ],
+                "10007": [
+                    { "name": "스피드", "value": 5 },
+                    { "name": "지능", "value": 14 },
+                    { "name": "pt", "value": 4 }
+                ]
+            },
+            "scenario4": {
+                "10003": [
+                    { "name": "스피드", "value": 17 },
+                    { "name": "파워", "value": 8 },
+                    { "name": "pt", "value": 5 }
+                ],
+                "10004": [
+                    { "name": "스태미나", "value": 21 },
+                    { "name": "근성", "value": 15 },
+                    { "name": "pt", "value": 6 }
+                ],
+                "10005": [
+                    { "name": "스태미나", "value": 10 },
+                    { "name": "파워", "value": 18 },
+                    { "name": "pt", "value": 5 }
+                ],
+                "10006": [
+                    { "name": "스피드", "value": 4 },
+                    { "name": "파워", "value": 4 },
+                    { "name": "근성", "value": 17 },
+                    { "name": "pt", "value": 5 }
+                ],
+                "10007": [
+                    { "name": "스피드", "value": 5 },
+                    { "name": "지능", "value": 14 },
+                    { "name": "pt", "value": 7 }
+                ]
+            }
+        }
+    },
+    "max3": {
+        "basics": {
+            "1": { "base": 20 },
+            "2": { "base": 20 },
+            "4": { "base": 1 },
+            "6": { "base": 1 },
+            "8": { "base": 0, "unique": 10 }
+        },
+        "scenarios": {
+            "scenario1": {
+                "10003": [
+                    { "name": "스피드", "value": 20 },
+                    { "name": "파워", "value": 10 },
+                    { "name": "pt", "value": 2 }
+                ],
+                "10004": [
+                    { "name": "스태미나", "value": 24 },
+                    { "name": "근성", "value": 12 },
+                    { "name": "pt", "value": 3 }
+                ],
+                "10005": [
+                    { "name": "스태미나", "value": 11 },
+                    { "name": "파워", "value": 17 },
+                    { "name": "pt", "value": 2 }
+                ],
+                "10006": [
+                    { "name": "스피드", "value": 7 },
+                    { "name": "파워", "value": 7 },
+                    { "name": "근성", "value": 18 },
+                    { "name": "pt", "value": 2 }
+                ],
+                "10007": [
+                    { "name": "스피드", "value": 5 },
+                    { "name": "지능", "value": 18 },
+                    { "name": "pt", "value": 2 }
+                ]
+            },
+            "scenario2": {
+                "10003": [
+                    { "name": "스피드", "value": 17 },
+                    { "name": "파워", "value": 8 },
+                    { "name": "pt", "value": 5 }
+                ],
+                "10004": [
+                    { "name": "스태미나", "value": 22 },
+                    { "name": "근성", "value": 15 },
+                    { "name": "pt", "value": 6 }
+                ],
+                "10005": [
+                    { "name": "스태미나", "value": 10 },
+                    { "name": "파워", "value": 18 },
+                    { "name": "pt", "value": 5 }
+                ],
+                "10006": [
+                    { "name": "스피드", "value": 5 },
+                    { "name": "파워", "value": 5 },
+                    { "name": "근성", "value": 15 },
+                    { "name": "pt", "value": 5 }
+                ],
+                "10007": [
+                    { "name": "스피드", "value": 5 },
+                    { "name": "지능", "value": 14 },
+                    { "name": "pt", "value": 7 }
+                ]
+            },
+            "scenario3": {
+                "10003": [
+                    { "name": "스피드", "value": 17 },
+                    { "name": "파워", "value": 8 },
+                    { "name": "pt", "value": 2 }
+                ],
+                "10004": [
+                    { "name": "스태미나", "value": 20 },
+                    { "name": "근성", "value": 10 },
+                    { "name": "pt", "value": 3 }
+                ],
+                "10005": [
+                    { "name": "스태미나", "value": 10 },
+                    { "name": "파워", "value": 14 },
+                    { "name": "pt", "value": 2 }
+                ],
+                "10006": [
+                    { "name": "스피드", "value": 5 },
+                    { "name": "파워", "value": 5 },
+                    { "name": "근성", "value": 15 },
+                    { "name": "pt", "value": 2 }
+                ],
+                "10007": [
+                    { "name": "스피드", "value": 5 },
+                    { "name": "지능", "value": 14 },
+                    { "name": "pt", "value": 4 }
+                ]
+            },
+            "scenario4": {
+                "10003": [
+                    { "name": "스피드", "value": 17 },
+                    { "name": "파워", "value": 8 },
+                    { "name": "pt", "value": 5 }
+                ],
+                "10004": [
+                    { "name": "스태미나", "value": 22 },
+                    { "name": "근성", "value": 15 },
+                    { "name": "pt", "value": 6 }
+                ],
+                "10005": [
+                    { "name": "스태미나", "value": 10 },
+                    { "name": "파워", "value": 18 },
+                    { "name": "pt", "value": 5 }
+                ],
+                "10006": [
+                    { "name": "스피드", "value": 4 },
+                    { "name": "파워", "value": 4 },
+                    { "name": "근성", "value": 17 },
+                    { "name": "pt", "value": 5 }
+                ],
+                "10007": [
+                    { "name": "스피드", "value": 5 },
+                    { "name": "지능", "value": 14 },
+                    { "name": "pt", "value": 7 }
+                ]
+            }
+        }
+    },
+    "max4": {
+        "basics": {
+            "1": { "base": 20 },
+            "2": { "base": 20 },
+            "4": { "base": 1 },
+            "6": { "base": 1 },
+            "8": { "base": 0, "unique": 10 }
+        },
+        "scenarios": {
+            "scenario1": {
+                "10003": [
+                    { "name": "스피드", "value": 20 },
+                    { "name": "파워", "value": 10 },
+                    { "name": "pt", "value": 2 }
+                ],
+                "10004": [
+                    { "name": "스태미나", "value": 24 },
+                    { "name": "근성", "value": 12 },
+                    { "name": "pt", "value": 3 }
+                ],
+                "10005": [
+                    { "name": "스태미나", "value": 11 },
+                    { "name": "파워", "value": 17 },
+                    { "name": "pt", "value": 2 }
+                ],
+                "10006": [
+                    { "name": "스피드", "value": 7 },
+                    { "name": "파워", "value": 7 },
+                    { "name": "근성", "value": 18 },
+                    { "name": "pt", "value": 2 }
+                ],
+                "10007": [
+                    { "name": "스피드", "value": 5 },
+                    { "name": "지능", "value": 18 },
+                    { "name": "pt", "value": 2 }
+                ]
+            },
+            "scenario2": {
+                "10003": [
+                    { "name": "스피드", "value": 17 },
+                    { "name": "파워", "value": 8 },
+                    { "name": "pt", "value": 5 }
+                ],
+                "10004": [
+                    { "name": "스태미나", "value": 22 },
+                    { "name": "근성", "value": 15 },
+                    { "name": "pt", "value": 6 }
+                ],
+                "10005": [
+                    { "name": "스태미나", "value": 10 },
+                    { "name": "파워", "value": 18 },
+                    { "name": "pt", "value": 5 }
+                ],
+                "10006": [
+                    { "name": "스피드", "value": 5 },
+                    { "name": "파워", "value": 5 },
+                    { "name": "근성", "value": 15 },
+                    { "name": "pt", "value": 5 }
+                ],
+                "10007": [
+                    { "name": "스피드", "value": 5 },
+                    { "name": "지능", "value": 14 },
+                    { "name": "pt", "value": 7 }
+                ]
+            },
+            "scenario3": {
+                "10003": [
+                    { "name": "스피드", "value": 17 },
+                    { "name": "파워", "value": 8 },
+                    { "name": "pt", "value": 2 }
+                ],
+                "10004": [
+                    { "name": "스태미나", "value": 20 },
+                    { "name": "근성", "value": 10 },
+                    { "name": "pt", "value": 3 }
+                ],
+                "10005": [
+                    { "name": "스태미나", "value": 10 },
+                    { "name": "파워", "value": 14 },
+                    { "name": "pt", "value": 2 }
+                ],
+                "10006": [
+                    { "name": "스피드", "value": 5 },
+                    { "name": "파워", "value": 5 },
+                    { "name": "근성", "value": 15 },
+                    { "name": "pt", "value": 2 }
+                ],
+                "10007": [
+                    { "name": "스피드", "value": 5 },
+                    { "name": "지능", "value": 14 },
+                    { "name": "pt", "value": 4 }
+                ]
+            },
+            "scenario4": {
+                "10003": [
+                    { "name": "스피드", "value": 17 },
+                    { "name": "파워", "value": 8 },
+                    { "name": "pt", "value": 5 }
+                ],
+                "10004": [
+                    { "name": "스태미나", "value": 22 },
+                    { "name": "근성", "value": 15 },
+                    { "name": "pt", "value": 6 }
+                ],
+                "10005": [
+                    { "name": "스태미나", "value": 10 },
+                    { "name": "파워", "value": 18 },
+                    { "name": "pt", "value": 5 }
+                ],
+                "10006": [
+                    { "name": "스피드", "value": 4 },
+                    { "name": "파워", "value": 4 },
+                    { "name": "근성", "value": 17 },
+                    { "name": "pt", "value": 5 }
+                ],
+                "10007": [
+                    { "name": "스피드", "value": 5 },
+                    { "name": "지능", "value": 14 },
+                    { "name": "pt", "value": 7 }
+                ]
+            }
+        }
+    }
+}
