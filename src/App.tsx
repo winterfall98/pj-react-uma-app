@@ -1,46 +1,16 @@
-import Modal from "./modal/Modal";
 import CardSimulator from "./cardSimulator/CardSimulator";
 import useModal from "./modal/useModal";
-import type { AlertModalProps, ConfirmModalProps } from "./modal/Modal.types";
 
 function App() {
-    const { modal, alert, confirm } = useModal();
-
-    const alertProps: AlertModalProps = {
-        message: "Hello, World!",
-        okWord: "OK",
-        variant: "default",
-        onConfirm: () => {
-            console.log("Alert confirmed!");
-        },
-    };
-
-    const confirmProps: ConfirmModalProps = {
-        message: "Hello, confirm!",
-        okWord: "OK",
-        cancelWord: "Cancel",
-        variant: "default",
-        onConfirm: () => {
-            console.log("Confirm confirmed!");
-        },
-        onCancel: () => {
-            console.log("Confirm cancelled!");
-        },
-    };
+    const { alert, confirm, ModalRoot } = useModal();
 
     return (
         <div className="App">
-            <CardSimulator />
+            <CardSimulator onError={
+                (message: string) => alert(message, { okWord: "확인", variant: "warning" })
+            } />
 
-
-            <br /><br /><br /><br />
-            <hr />
-            <button onClick={() => alert(alertProps)}>Show alert Modal</button>
-            <button onClick={() => confirm(confirmProps)}>
-                Show confirm Modal
-            </button>
-
-            {modal && <Modal {...modal} />}
+            {ModalRoot}
         </div>
     );
 }

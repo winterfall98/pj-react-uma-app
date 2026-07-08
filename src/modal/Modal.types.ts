@@ -9,13 +9,13 @@ export type ModalBaseProps = {
 }
 
 export type AlertModalProps = ModalBaseProps & {
-    onConfirm: () => void,
+    onConfirm?: () => void,
 }
 
 export type ConfirmModalProps = ModalBaseProps & {
     cancelWord?: string,
     onConfirm: () => void,
-    onCancel: () => void,
+    onCancel?: () => void,
 }
 
 export type ModalProps =
