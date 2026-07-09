@@ -13,7 +13,7 @@ import { getCache, setCache, fetchCardStats } from "./CachedCardStats.ts";
 
 const defaultSlot: CardSlot = {code: 0, stats: {}, limitBreak: 4};
 
-function CardSimulator() {
+function CardSimulator({ onError }: {onError: (message: string) => void}) {
     const recentScenario = SCENARIO_LIST.at(-1)?.type;
     const [selectedScenario, setSelectedScenario] = useState<number>(Number(recentScenario));
 
@@ -49,22 +49,37 @@ function CardSimulator() {
 
     async function setSlotsByIndex(index: number, code: CardCode) {
         let newStats = {};
-
+        let data;
+        let go = true;
         // 캐시 데이터 체크 후 fetch
         if (code > 0) {
             newStats = getCache(code);
             if(!newStats) {
-                const data = await fetchCardStats(code);
-                setCache(code, data);
-                newStats = data;
+                try {
+                    data = await fetchCardStats(code);
+                } catch (error) {
+                    if (error instanceof Error) {
+                        go = false;
+                        onError(`
+                            유효하지 않은 응답입니다.<br>
+                            해당 파일이 존재하지 않거나 손상되었습니다.<br>
+                            다른 항목을 선택해보세요.
+                            `);
+                    }
+                }
             }
         }
 
-        setSlots((prev) => {
-            const newSlots = [...prev];
-            newSlots[index] = {...prev[index], code, stats: newStats};
-            return newSlots;
-        })
+        if (go) {
+            setCache(code, data);
+            newStats = data;
+
+            setSlots((prev) => {
+                const newSlots = [...prev];
+                newSlots[index] = {...prev[index], code, stats: newStats};
+                return newSlots;
+            })
+        }
     }
 
     function setSlotsByLimitBreak(number: number, index: number) {

@@ -21,7 +21,15 @@ export function setCache(code: number, data: CardStatData) {
 
 export async function fetchCardStats(code: number) {
     const res = await fetch(`/cardSimulator/cardStatData/${code}.json`);
+    const contentType = res.headers.get("content-type");
+    if (!contentType?.includes("application/json")) {
+        throw new Error(`유효하지 않은 응답: ${code}.json`);
+    }
+
     const data = await res.json();
+    if(!data || Object.keys(data).length === 0) {
+        throw new Error(`empty data for code: ${code}`);
+    }
 
     return data;
 }
