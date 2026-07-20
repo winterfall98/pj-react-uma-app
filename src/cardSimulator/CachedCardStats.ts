@@ -20,7 +20,7 @@ export function setCache(code: number, data: CardStatData) {
 }
 
 export async function fetchCardStats(code: number) {
-    const res = await fetch(`/cardSimulator/cardStatData/${code}.json`);
+    const res = await fetch(`${import.meta.env.BASE_URL}cardSimulator/cardStatData/${code}.json`);
     const contentType = res.headers.get("content-type");
     if (!contentType?.includes("application/json")) {
         throw new Error(`유효하지 않은 응답: ${code}.json`);

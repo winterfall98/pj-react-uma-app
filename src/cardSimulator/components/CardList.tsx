@@ -30,7 +30,7 @@ async function setCharaDatas() {
 
     const [images, cardList] = await Promise.all([
         loadImages(),
-        fetch("/cardSimulator/cardListData.json")
+        fetch(`${import.meta.env.BASE_URL}cardSimulator/cardListData.json`)
         .then((res) => res.json() as Promise<CardListMap>),
     ]);
 
