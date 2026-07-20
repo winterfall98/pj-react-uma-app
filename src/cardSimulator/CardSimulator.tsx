@@ -13,7 +13,13 @@ import { getCache, setCache, fetchCardStats } from "./CachedCardStats.ts";
 
 const defaultSlot: CardSlot = {code: 0, stats: {}, limitBreak: 4};
 
-function CardSimulator({ onError }: {onError: (message: string) => void}) {
+
+type CardSimulatorProps = {
+    onError: (message: string) => void;
+    onConfirm: (message: string) => Promise<boolean>;
+}
+
+function CardSimulator({ onError, onConfirm }: CardSimulatorProps) {
     const recentScenario = SCENARIO_LIST.at(-1)?.type;
     const [selectedScenario, setSelectedScenario] = useState<number>(Number(recentScenario));
 
@@ -29,10 +35,18 @@ function CardSimulator({ onError }: {onError: (message: string) => void}) {
         [slots]
     )
 
-    function controlSlotsLength(newLength: number) {
+    async function controlSlotsLength(newLength: number) {
         if (newLength <= 0 || newLength > 9) return false;
 
-        const diff: number = newLength - slots.length;
+        const currentSlotsLength = slots.length;
+        const mobileBreak = 768;
+
+        if (window.innerWidth <= mobileBreak && newLength > 4 && currentSlotsLength < newLength) {
+            const confirmResult = await onConfirm(`작은 화면에서는 4칸을 권장합니다. 그래도 ${newLength}칸으로 설정하시려면 확인을 눌러주세요.`);
+            if (!confirmResult) return;
+        }
+
+        const diff: number = newLength - currentSlotsLength;
 
         if (diff > 0) {
             // 덧붙이기

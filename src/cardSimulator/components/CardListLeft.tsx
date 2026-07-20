@@ -1,6 +1,7 @@
 
 import styles from "./../assets/styles/cardSimulator.module.scss";
-interface CardListLeftProps {
+
+type CardListLeftProps = {
     col: number;
     onClickEvent: (n:number) => void;
     resetAllSlotsEvent: () => void;
@@ -20,7 +21,7 @@ function CardListLeft({ col, onClickEvent, resetAllSlotsEvent }: CardListLeftPro
             </div> */}
 
             <div className={styles.selectBox}>
-                <h4>카드 갯수 선택</h4>
+                <h4>카드 슬롯 갯수 선택</h4>
                 <div className={styles.leftInnerBox}>
                     <div className={styles.select}>
                         <select id="col" value={col} onChange={(e) => onClickEvent(Number(e.target.value))}>
