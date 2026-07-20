@@ -50,7 +50,7 @@ function CardSimulator({ onError }: {onError: (message: string) => void}) {
     async function setSlotsByIndex(index: number, code: CardCode) {
         let newStats = {};
         let data;
-        let go = true;
+        let go = code > 0;
         // 캐시 데이터 체크 후 fetch
         if (code > 0) {
             newStats = getCache(code);
@@ -71,12 +71,20 @@ function CardSimulator({ onError }: {onError: (message: string) => void}) {
         }
 
         if (go) {
-            setCache(code, data);
-            newStats = data;
+            if (typeof data === 'object') {
+                setCache(code, data);
+                newStats = data ?? {};
+            }
 
             setSlots((prev) => {
                 const newSlots = [...prev];
                 newSlots[index] = {...prev[index], code, stats: newStats};
+                return newSlots;
+            })
+        } else {
+            setSlots((prev) => {
+                const newSlots = [...prev];
+                newSlots[index] = defaultSlot;
                 return newSlots;
             })
         }
@@ -90,11 +98,20 @@ function CardSimulator({ onError }: {onError: (message: string) => void}) {
         })
     }
 
+    function resetAllSlots() {
+        const newSlots: CardSlot[] = Array.from({ length: slots.length }, () => ({
+            ...defaultSlot
+        }));
+
+        setSlots(() => newSlots);
+        setSelectedScenario(() => Number(recentScenario));
+    }
+
     return (
         <div id="cardSimulator" className={styles.cardSimulator}>
             <h2>카드 시뮬레이터</h2>
             <div className={styles.cardSimulatorInner}>
-                <CardListLeft onClickEvent={controlSlotsLength} col={slots.length} />
+                <CardListLeft onClickEvent={controlSlotsLength} resetAllSlotsEvent={resetAllSlots} col={slots.length} />
                 <CardList cards={slots.map(slot => slot.code)} setCardsEvent={setSlotsByIndex} />
             </div>
             <ScenarioSelect selectedScenario={selectedScenario} setSelectedScenario={setSelectedScenario} />

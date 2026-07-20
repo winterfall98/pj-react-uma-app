@@ -1,20 +1,31 @@
+$pc-break: 1080px;
 $mobile-break: 640px;
 html {
     scrollbar-gutter: stable;
 }
 .cardSimulator {
-    margin: var(--space-lg);
+    max-width: $pc-break;
+    margin: var(--space-lg) auto;
     display: flex;
     flex-direction: column;
     gap: var(--space-md);
 
+    @media screen and (max-width: $pc-break) {
+        margin: var(--space-lg);
+    }
+
     @media screen and (max-width: $mobile-break) {
-        margin: 0;
+        margin: var(--space-md);
+        gap: var(--space-sm);
     }
 
     .cardSimulatorInner {
         display: flex;
         gap: var(--space-md);
+        @media screen and (max-width: $mobile-break) {
+            flex-direction: column;
+            gap: var(--space-sm);
+        }
     }
 
     h2 {
@@ -24,6 +35,10 @@ html {
         padding: var(--space-md);
         font-size: var(--font-lg);
         font-weight: 500;
+        @media screen and (max-width: $mobile-break) {
+            padding: var(--space-sm);
+            font-size: var(--space-md);
+        }
     }
 
     .leftBoxWrap {
@@ -41,11 +56,50 @@ html {
             letter-spacing: var(--letter-spacing-md);
         }
 
-        .selectBottomBox {
+        .leftInnerBox {
             padding: var(--space-sm);
             border-radius: 0 0 var(--radius-lg) var(--radius-lg);
             border: 1px solid var(--color-border);
             border-top: 0;
+            color: var(--black-800);
+        }
+
+        .selectBox {
+            .leftInnerBox {
+                display: flex;
+                gap: var(--space-md);
+                flex-direction: column;
+                justify-content: space-between;
+                align-items: center;
+
+                .select {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    gap: var(--space-half);
+                    width: 100%;
+                    select {
+                        width: 100%;
+                        padding: 0 var(--space-half);
+                        color: var(--black-800);
+                        text-align: center;
+                        border-color: var(--color-border);
+                        border-radius: var(--radius-sm);
+                    }
+                }
+            }
+        }
+
+        .resetButton {
+            width: 100%;
+            color: var(--white);
+            padding: var(--space-q) var(--space-half);
+            background: var(--color-border);
+            border-radius: var(--radius-lg);
+            transition: all 0.6s;
+            &:hover {
+                opacity: 0.75;
+            }
         }
 
         p {
@@ -54,6 +108,18 @@ html {
             text-indent: -1rem;
             letter-spacing: var(--letter-spacing-md);
         }
+
+        @media screen and (max-width: $mobile-break) {
+            width: 100%;
+            padding: 0 var(--space-half);
+            h4 {
+                font-size: var(--font-sm);
+            }
+
+            .leftInnerBox {
+                padding: var(--space-half);
+            }
+        }
     }
 
     .cardList {
@@ -61,6 +127,9 @@ html {
         display: flex;
         align-items: start;
         gap: var(--space-xsm);
+        @media screen and (max-width: $mobile-break) {
+            width: 100%;
+        }
     }
     .card {
         position: relative;
@@ -84,18 +153,26 @@ html {
                 pointer-events: none;
                 user-select: none;
             }
+            @media screen and (max-width: $mobile-break) {
+                width: 100%;
+                font-size: var(--font-xsm);
+            }
         }
 
+        .removeButton {
+            display: none;
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 24px;
+            height: 24px;
+            background: rgba(100, 100, 100, 0.3);
+            border-radius: 0 8px;
+        }
 
         &.on {
             .removeButton {
-                position: absolute;
-                top: 0;
-                right: 0;
-                width: 24px;
-                height: 24px;
-                background: rgba(100, 100, 100, 0.3);
-                border-radius: 0 8px;
+                display: block;
                 &::before, &::after {
                     content: "";
                     display: block;
@@ -125,6 +202,9 @@ html {
 
         &:has(img) {
             border-style: solid;
+            img {
+                margin: auto;
+            }
         }
 
         .sparkle {
@@ -196,6 +276,19 @@ html {
             &::after {
                 width: 40px;
                 height: 7px;
+            }
+        }
+
+        @media screen and (max-width: $mobile-break){
+            .slotPlus {
+                &:before {
+                    width: 5px;
+                    height: 30px;
+                }
+                &:after {
+                    width: 30px;
+                    height: 5px;
+                }
             }
         }
     }
@@ -285,11 +378,11 @@ html {
                     background-color: var(--white);
                     border-radius: var(--radius-md);
                     border:1px solid var(--black-400);
-                    
+
                     svg {
                         color: var(--black-600);
                     }
-                    
+
                     &.on {
                         border: 1px solid var(--color-type-fill);
                         background-color: var(--color-bg-third);
@@ -333,6 +426,11 @@ html {
             border-radius: var(--radius-md);
             color: var(--black-800);
         }
+        @media screen and (max-width: $mobile-break) {
+            select {
+                font-size: var(--font-sm);
+            }
+        }
     }
 
     .statTable {
@@ -367,8 +465,32 @@ html {
                         display: flex;
                         align-items: center;
                         justify-content: left;
-                        padding-left: var(--space-half);
                         gap: var(--space-half);
+                        svg {
+                            width: 22px;
+                            height: 22px;
+                        }
+                        span {
+                            text-align: left;
+                        }
+                    }
+                    @media screen and (max-width: $mobile-break) {
+                        padding: var(--space-q);
+                        div {
+                            padding-left: 0;
+                            font-size: var(--font-xsm);
+                            flex-direction: column;
+                            gap: var(--space-q);
+                        }
+                        svg {
+                            display: none;
+                            // width: 18px;
+                            // height: 18px;
+                        }
+                        span {
+                            text-align: center !important;
+                            word-break: keep-all;
+                        }
                     }
                 }
 
@@ -376,6 +498,10 @@ html {
                     padding: var(--space-half);
                     text-align: center;
                     font-size: var(--font-sm);
+                    @media screen and (max-width: $mobile-break) {
+                        padding: var(--space-q);
+                        font-size: var(--font-xsm);
+                    }
                     select {
                         width: 100%;
                         border-color: var(--black-200);

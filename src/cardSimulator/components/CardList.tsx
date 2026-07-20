@@ -54,7 +54,7 @@ function Card({ code, openLayer, removeThisCardEvent }: CardProps) {
     const linkUrl: string = "https://uma.inven.co.kr/";
     return (
         <>
-            <div className={`${styles.card} ${code > 0 && styles.on}`}>
+            <div className={`${styles.card} ${code > 0 ? styles.on : ''}`}>
                 <button className={styles.cardSlot} onClick={(e) => {e.stopPropagation(); openLayer(e); }}>
                     {code > 0 ? (
                         <img
