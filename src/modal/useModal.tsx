@@ -35,24 +35,24 @@ function useModal() {
             okWord?: string;
             cancelWord?: string;
             variant?: ModalVariant;
-            onConfirm?: () => void;
-            onCancel?: () => void;
         },
-    ) {
-        setModal({
-            type: "confirm",
-            message,
-            okWord: options?.okWord,
-            cancelWord: options?.cancelWord,
-            variant: options?.variant,
-            onConfirm: () => {
-                setModal(null);
-                options?.onConfirm?.();
-            },
-            onCancel: () => {
-                setModal(null);
-                options?.onCancel?.();
-            },
+    ): Promise<boolean> {
+        return new Promise((resolve) => {
+            setModal({
+                type: "confirm",
+                message,
+                okWord: options?.okWord,
+                cancelWord: options?.cancelWord,
+                variant: options?.variant,
+                onConfirm: () => {
+                    setModal(null);
+                    resolve(true);
+                },
+                onCancel: () => {
+                    setModal(null);
+                    resolve(false);
+                },
+            });
         });
     }
 
