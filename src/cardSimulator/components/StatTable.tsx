@@ -114,7 +114,6 @@ type TableProps = {
 }
 
 function Table({ slots, scenarioNumber, isUsed, limitBreakEvent }: TableProps) {
-    console.log(slots);
     return (
         <div className={styles.statTable}>
             <table className={`${isUsed ? styles.used : ''}`}>

@@ -39,7 +39,7 @@ async function setCharaDatas() {
     }
 
     cachedCardList = cardList;
-    console.log('cards => ', cachedCardList);
+    // console.log('cards => ', cachedCardList);
 }
 
 
@@ -118,7 +118,6 @@ function CardList({ cards, setCardsEvent }: cardListProps) {
     }
 
     function removeThisCardEvent(index: number, code: number) {
-        console.log(index);
         setCardsEvent(index, code);
         setSelectedSlot(null);
     }

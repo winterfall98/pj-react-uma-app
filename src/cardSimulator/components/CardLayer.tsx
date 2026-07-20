@@ -125,7 +125,7 @@ function CardLayer({ cardList, closeLayerEvent, setCardsEvent, coordXY }: CardLa
     // Layer 위치 보정
     let x = coordXY[0];
     let y = coordXY[1] + window.scrollY;
-    console.log(y, window.scrollY);
+    // console.log(y, window.scrollY);
 
     if (window.innerWidth <= MOBILE_BREAK || window.innerHeight <= layerHeight) {
         // window 폭이 layerWidth 보다 작을 때는 레이어 폭을 가득 채움
