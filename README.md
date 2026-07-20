@@ -1,73 +1,19 @@
-# React + TypeScript + Vite
+# pj-react-uma-app
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 1. Card Simulator
 
-Currently, two official plugins are available:
+업무상 개발했던, 시뮬레이터 페이지를 react 버전으로 리메이크했습니다.
+유저가 게임 진행을 돕는 페이지로, 게임 내 콘텐츠인 '서포트 카드'를 조합하여 시나리오별 스탯 효과를 시뮬레이션하는 기능입니다.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- 카드 슬롯 관리: 4~9개의 슬롯을 동적으로 구성하고, 각 슬롯에 카드를 배치하거나 제거할 수 있습니다.
+- 카드 선택 레이어: 카드 타입(스피드, 스태미나, 파워, 근성, 지능, 프렌드)별 필터와 키워드 검색(300ms 디바운스)을 지원하며, 뷰포트 경계에 맞춰 위치가 자동 조정됩니다.
+- 시나리오별 스탯 표시: 4개 시나리오에 따라 달라지는 훈련 효과와 보너스 수치를 테이블 형태로 출력합니다.
+- 한계돌파 시스템: 카드별 0~4성 한계돌파 단계에 따라 스탯 수치가 변동됩니다.
+- 데이터 캐싱: 카드 스탯 데이터를 fetch 후 메모리에 캐싱하여 동일 카드 재조회 시 불필요한 요청을 방지합니다. 응답의 유효성을 검증하고 비정상 응답에 대한 에러 처리를 포함합니다.
+- 이미지 프리로드: Vite의 glob import를 활용하여 카드 이미지를 사전 로딩합니다.
 
-## React Compiler
+## 2. 커스텀 모달 시스템 (useModal Hook)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+모달 UI를 `Modal.tsx`에, 상태 관리와 렌더링 로직을 `useModal` 커스텀 훅에 분리하여 설계했습니다. 사용하는 쪽에서는 Modal 컴포넌트의 내부 구조나 타입을 알 필요 없이, `useModal`이 제공하는 `alert`과 `confirm` 함수만으로 모달을 제어할 수 있습니다.
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+호출 인터페이스는 `alert("메시지")` 형태의 단순 호출과 `alert("메시지", { variant: "danger" })` 형태의 상세 호출을 모두 지원하도록 설계하여, 별도의 타입 정의를 참조하지 않아도 직관적으로 사용할 수 있도록 했습니다. 또한 모달의 렌더링 영역(`ModalRoot`)까지 훅 내부에서 관리하여, 사용하는 컴포넌트에서는 상태와 UI의 연결 구조를 신경 쓰지 않아도 됩니다.

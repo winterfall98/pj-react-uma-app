@@ -2,7 +2,7 @@ import CardSimulator from "./cardSimulator/CardSimulator";
 import useModal from "./modal/useModal";
 
 function App() {
-    const { alert, confirm, ModalRoot } = useModal();
+    const { alert, ModalRoot } = useModal();
 
     return (
         <div className="App">
