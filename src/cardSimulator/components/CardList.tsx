@@ -5,7 +5,8 @@ import CardLayer from "./CardLayer";
 
 // 이미지 처리
 const imageModules = import.meta.glob("../assets/charaCard/*.png", {
-    as: "url",
+    query: "?url",
+    import: "default",
 });
 
 let cachedCardList: CardListMap = {};
