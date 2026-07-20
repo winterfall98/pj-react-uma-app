@@ -1,0 +1,1 @@
+var e=`/pj-react-uma-app/assets/scardimage_30212-BRi_b9MF.png`;export{e as default};

@@ -1,0 +1,1 @@
+var e=`/assets/scardimage_30231-lR7pqeSE.png`;export{e as default};

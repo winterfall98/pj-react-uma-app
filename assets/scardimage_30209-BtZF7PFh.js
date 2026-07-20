@@ -1,0 +1,1 @@
+var e=`/assets/scardimage_30209-Bmqt-IOZ.png`;export{e as default};
